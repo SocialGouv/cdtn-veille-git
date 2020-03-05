@@ -1,0 +1,10 @@
+{
+  "name": "@veille/git",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "mkdirp": "^1.0.3",
+    "simple-git": "^1.131.0"
+  }
+}
