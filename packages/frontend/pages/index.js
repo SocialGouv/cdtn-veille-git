@@ -1,3 +1,4 @@
 import React from "react";
 
-export default <div>io</div>;
+const Home = () => <div>Home</div>;
+export default Home;

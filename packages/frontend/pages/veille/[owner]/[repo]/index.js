@@ -94,7 +94,7 @@ const hasChanges = file =>
 
 const Page = ({ query, changes }) => {
   //console.log("query", query);
-  console.log("changes", changes);
+  //console.log("changes", changes);
   return (
     <div className="container">
       {changes.map(change => (
