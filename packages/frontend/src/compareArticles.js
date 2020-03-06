@@ -10,23 +10,56 @@ const getParents = node => {
   return chain;
 };
 
+const getParentTextId = node => {
+  let id;
+  node = node.parent;
+  while (node) {
+    if (
+      node.data &&
+      node.data.id &&
+      node.data.id.match(/^(KALI|LEGI)TEXT\d+$/)
+    ) {
+      id = node.data.id;
+      break;
+    }
+    node = node.parent;
+  }
+  return id;
+};
+
+const getRootId = node => {
+  let id;
+  while (node) {
+    id = node.data.id;
+    node = node.parent;
+  }
+  return id;
+};
+
 const stripArticle = article => ({
   ...article,
-  parents: getParents(article)
+  parents: getParents(article),
+  textId: getParentTextId(article),
+  rootId: getRootId(article)
 });
 
-const stripSection = ({ children, ...props }) => ({
-  ...props,
-  parents: getParents(props)
+const stripSection = section => ({
+  ...section,
+  parents: getParents(section),
+  textId: getParentTextId(section),
+  rootId: getRootId(section)
 });
 
 // return diffed articles nodes
 const compareArticles = (tree1, tree2, comparator) => {
+  const parentsTree1 = parents(tree1);
+  const parentsTree2 = parents(tree2);
+
   // all articles from tree1
-  const articles1 = selectAll("article", parents(tree1)).map(stripArticle);
+  const articles1 = selectAll("article", parentsTree1).map(stripArticle);
   const articles1cids = articles1.map(a => a.data.cid);
   // all articles from tree2
-  const articles2 = selectAll("article", parents(tree2)).map(stripArticle);
+  const articles2 = selectAll("article", parentsTree2).map(stripArticle);
   const articles2cids = articles2.map(a => a.data.cid);
 
   // new : articles in tree2 not in tree1
@@ -52,7 +85,7 @@ const compareArticles = (tree1, tree2, comparator) => {
   );
 
   // all sections from tree1
-  const sections1 = selectAll("section", tree1).map(stripSection);
+  const sections1 = selectAll("section", parentsTree1).map(stripSection);
 
   // special case, kali sections have no id, but cid
   const idField = (sections1[0].data.cid && "cid") || "id";
@@ -60,7 +93,7 @@ const compareArticles = (tree1, tree2, comparator) => {
   const sections1cids = sections1.map(a => a.data[idField]);
 
   // all sections from tree2
-  const sections2 = selectAll("section", tree2).map(stripSection);
+  const sections2 = selectAll("section", parentsTree2).map(stripSection);
   const sections2cids = sections2.map(a => a.data[idField]);
 
   // new : sections in tree2 not in tree1
