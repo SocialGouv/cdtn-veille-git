@@ -4,7 +4,7 @@ const Git = require("simple-git/promise");
 const getLatestChanges = ({ cloneDir, filterPath = () => true }) => {
   const git = Git(cloneDir);
   return git
-    .log(["-n", "50"])
+    .log(["-n", "100"])
     .then(res => res.all)
     .then(commits =>
       commits.reduce(async (all, commit) => {
@@ -20,7 +20,7 @@ const getLatestChanges = ({ cloneDir, filterPath = () => true }) => {
           ...(await all),
           {
             ...commit,
-            files
+            files: files.map(path => ({ path }))
           }
         ];
       }, [])

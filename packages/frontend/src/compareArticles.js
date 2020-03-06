@@ -1,0 +1,110 @@
+const selectAll = require("unist-util-select").selectAll;
+const parents = require("unist-util-parents");
+
+const getParents = node => {
+  var chain = [];
+  while (node) {
+    node.data.title && chain.unshift(node.data.title);
+    node = node.parent;
+  }
+  return chain;
+};
+
+const stripArticle = article => ({
+  ...article,
+  parents: getParents(article)
+});
+
+const stripSection = ({ children, ...props }) => ({
+  ...props,
+  parents: getParents(props)
+});
+
+// return diffed articles nodes
+const compareArticles = (tree1, tree2, comparator) => {
+  // all articles from tree1
+  const articles1 = selectAll("article", parents(tree1)).map(stripArticle);
+  const articles1cids = articles1.map(a => a.data.cid);
+  // all articles from tree2
+  const articles2 = selectAll("article", parents(tree2)).map(stripArticle);
+  const articles2cids = articles2.map(a => a.data.cid);
+
+  // new : articles in tree2 not in tree1
+  const newArticles = articles2.filter(
+    art => !articles1cids.includes(art.data.cid)
+  );
+  const newArticlesCids = newArticles.map(a => a.data.cid);
+
+  // supressed: articles in tree1 not in tree2
+  const missingArticles = articles1.filter(
+    art => !articles2cids.includes(art.data.cid)
+  );
+
+  // modified : articles with modified texte
+  const modifiedArticles = articles2.filter(
+    art =>
+      // exclude new articles
+      !newArticlesCids.includes(art.data.cid) &&
+      articles1.find(
+        // same article, different texte
+        art2 => art2.data.cid === art.data.cid && comparator(art, art2)
+      )
+  );
+
+  // all sections from tree1
+  const sections1 = selectAll("section", tree1).map(stripSection);
+
+  // special case, kali sections have no id, but cid
+  const idField = (sections1[0].data.cid && "cid") || "id";
+
+  const sections1cids = sections1.map(a => a.data[idField]);
+
+  // all sections from tree2
+  const sections2 = selectAll("section", tree2).map(stripSection);
+  const sections2cids = sections2.map(a => a.data[idField]);
+
+  // new : sections in tree2 not in tree1
+  const newSections = sections2.filter(
+    section => !sections1cids.includes(section.data[idField])
+  );
+  const newSectionsCids = newSections.map(a => a.data[idField]);
+
+  // supressed: sections in tree1 not in tree2
+  const missingSections = sections1.filter(
+    section => !sections2cids.includes(section.data[idField])
+  );
+
+  // modified : sections with modified texte
+  const modifiedSections = sections2.filter(
+    section =>
+      // exclude new sections
+      !newSectionsCids.includes(section.data[idField]) &&
+      sections1.find(
+        // same section, different etat
+        section2 =>
+          section2.data[idField] === section.data[idField] &&
+          section2.data.etat !== section.data.etat
+      )
+  );
+
+  const changes = {
+    added: [...newSections, ...newArticles],
+    removed: [...missingSections, ...missingArticles],
+    modified: [
+      ...modifiedSections.map(modif => ({
+        ...modif,
+        // add the previous version in the result so we can diff later
+        previous: sections1.find(a => a.data[idField] === modif.data[idField])
+      })),
+      ...modifiedArticles.map(modif => ({
+        ...modif,
+        // add the previous version in the result so we can diff later
+        previous: articles1.find(a => a.data.cid === modif.data.cid)
+      }))
+    ]
+  };
+
+  return changes;
+};
+
+module.exports = { compareArticles };
