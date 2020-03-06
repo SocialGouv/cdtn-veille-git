@@ -5,7 +5,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "test": "exit 0"
+    "test": "exit 0",
+    "lint": "exit 0",
+    "build": "yarn workspace @veille/frontend build"
   },
   "workspaces": [
     "packages/*"
