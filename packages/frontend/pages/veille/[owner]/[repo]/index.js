@@ -1,5 +1,22 @@
 import React from "react";
 import fetch from "isomorphic-unfetch";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  CardHeader,
+  CardSubtitle,
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Button,
+  CardText,
+  Row,
+  Col
+} from "reactstrap";
+import classnames from "classnames";
 
 const getUrl = (source, textId, rootId, type, data) => {
   if (source === "LEGI" && type === "article") {
@@ -49,7 +66,7 @@ const FileChangeDetail = ({ source, textId, rootId, type, data, previous }) => {
     <div style={{ marginLeft: 20 }}>
       {type === "article" && (
         <div>
-          <Badge title={data.etat} style={{ marginRight: 10 }} />
+          ▸ <Badge title={data.etat} style={{ marginRight: 10 }} />
           <a href={href} target="_blank">
             Article {data.num}
           </a>
@@ -63,7 +80,7 @@ const FileChangeDetail = ({ source, textId, rootId, type, data, previous }) => {
       )}
       {type === "section" && (
         <div>
-          <Badge title={data.etat} style={{ marginRight: 10 }} />
+          ▸ <Badge title={data.etat} style={{ marginRight: 10 }} />
           <a href={href} target="_blank">
             Section {data.title}
           </a>
@@ -97,58 +114,92 @@ const Page = ({ query, changes }) => {
   //console.log("changes", changes);
   return (
     <div className="container">
-      {changes.map(change => (
-        <React.Fragment key={change.hash}>
-          <h4>
-            {change.source} - {frenchDate(change.date)}
-          </h4>
-          {change.files.filter(hasChanges).map(file => {
-            return (
-              <React.Fragment key={file.path}>
-                <h5>{file.title}</h5>
-                <ul>
-                  {file.changes.added.length ? (
-                    <div style={{ marginTop: 20 }}>
-                      <h6>Nouveaux ({file.changes.added.length})</h6>
-                      {file.changes.added.map(f => (
-                        <FileChangeDetail
-                          source={change.source}
-                          key={f.id}
-                          {...f}
-                        />
-                      ))}
-                    </div>
-                  ) : null}
-                  {file.changes.removed.length ? (
-                    <div style={{ marginTop: 20 }}>
-                      <h6>Supprimés ({file.changes.removed.length})</h6>
-                      {file.changes.removed.map(f => (
-                        <FileChangeDetail
-                          source={change.source}
-                          key={f.id}
-                          {...f}
-                        />
-                      ))}
-                    </div>
-                  ) : null}
-                  {file.changes.modified.length ? (
-                    <div style={{ marginTop: 20 }}>
-                      <h6>Modifiés ({file.changes.modified.length})</h6>
-                      {file.changes.modified.map(f => (
-                        <FileChangeDetail
-                          source={change.source}
-                          key={f.id}
-                          {...f}
-                        />
-                      ))}
-                    </div>
-                  ) : null}
-                </ul>
-              </React.Fragment>
-            );
-          })}
-        </React.Fragment>
-      ))}
+      <Nav tabs>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: query.repo === "legi-data" })}
+            href="/veille/socialgouv/legi-data"
+          >
+            LEGI
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: query.repo === "kali-data" })}
+            href="/veille/socialgouv/kali-data"
+          >
+            KALI
+          </NavLink>
+        </NavItem>
+      </Nav>
+      <TabContent>
+        <TabPane>
+          <Row>
+            <Col sm="12">
+              {changes.map(change => (
+                <React.Fragment key={change.hash}>
+                  <h4 style={{ marginTop: 40 }}>
+                    {change.source} - {frenchDate(change.date)}
+                  </h4>
+                  {change.files.filter(hasChanges).map(file => {
+                    return (
+                      <Card key={file.path} style={{ marginBottom: 20 }}>
+                        <CardHeader style={{ fontSize: "1.2em" }}>
+                          {file.title}
+                        </CardHeader>
+                        <CardBody>
+                          <ul>
+                            {file.changes.added.length ? (
+                              <div style={{ marginTop: 20 }}>
+                                <h6>Nouveaux ({file.changes.added.length})</h6>
+                                {file.changes.added.map(f => (
+                                  <FileChangeDetail
+                                    source={change.source}
+                                    key={f.id}
+                                    {...f}
+                                  />
+                                ))}
+                              </div>
+                            ) : null}
+                            {file.changes.removed.length ? (
+                              <div style={{ marginTop: 20 }}>
+                                <h6>
+                                  Supprimés ({file.changes.removed.length})
+                                </h6>
+                                {file.changes.removed.map(f => (
+                                  <FileChangeDetail
+                                    source={change.source}
+                                    key={f.id}
+                                    {...f}
+                                  />
+                                ))}
+                              </div>
+                            ) : null}
+                            {file.changes.modified.length ? (
+                              <div style={{ marginTop: 20 }}>
+                                <h6>
+                                  Modifiés ({file.changes.modified.length})
+                                </h6>
+                                {file.changes.modified.map(f => (
+                                  <FileChangeDetail
+                                    source={change.source}
+                                    key={f.id}
+                                    {...f}
+                                  />
+                                ))}
+                              </div>
+                            ) : null}
+                          </ul>
+                        </CardBody>
+                      </Card>
+                    );
+                  })}
+                </React.Fragment>
+              ))}
+            </Col>
+          </Row>
+        </TabPane>
+      </TabContent>
     </div>
   );
 };
