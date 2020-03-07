@@ -6,17 +6,22 @@ import {
   CardTitle,
   CardHeader,
   CardSubtitle,
+  Jumbotron,
   TabContent,
   TabPane,
   Nav,
   NavItem,
   NavLink,
+  Badge,
   Button,
   CardText,
+  Table,
   Row,
   Col
 } from "reactstrap";
 import classnames from "classnames";
+
+import Diff from "../../../../src/Diff";
 
 const getUrl = (source, textId, rootId, type, data) => {
   if (source === "LEGI" && type === "article") {
@@ -34,16 +39,9 @@ const getUrl = (source, textId, rootId, type, data) => {
       return `https://www.legifrance.gouv.fr/affichIDCC.do?cidTexte=${
         data.id
       }&idConvention=${textId || rootId}`;
-    } //&cidTexte=KALITEXT000023684822&
-
-    // https://www.legifrance.gouv.fr/affichIDCC.do?idConvention=KALICONT000005635624&cidTexte=KALITEXT000005678897
-    //  https://www.legifrance.gouv.fr/affichIDCC.do?idArticle=KALIARTI000005849461&idSectionTA=KALISCTA000005723177&cidTexte=KALITEXT000005678899&idConvention=KALICONT000005635624&dateTexte=29990101
-
-    //https://www.legifrance.gouv.fr/affichIDCC.do;jsessionid=4C69BD3C8DE893DE7A87A722EE815999.tplgfr43s_1?idConvention=${textId}&cidTexte=${data.id}`;
+    }
   }
 };
-
-//www.legifrance.gouv.fr/affichIDCCArticle.do?idArticle=KALIARTI000027909393&cidTexte=KALITEXT000020377916&dateTexte=29990101&categorieLien=id
 
 const colors = {
   VIGUEUR: "success",
@@ -52,47 +50,48 @@ const colors = {
   ABROGE_DIFF: "warning"
 };
 
-const getColorByTitle = title => colors[title] || "primary";
+const getColorByEtat = title => colors[title] || "primary";
 
-const Badge = ({ title, style }) => (
-  <span className={`badge badge-${getColorByTitle(title)}`} style={style}>
-    {title}
+const BadgeEtat = ({ etat, style }) => (
+  <span className={`badge badge-${getColorByEtat(etat)}`} style={style}>
+    {etat}
   </span>
 );
 
 const FileChangeDetail = ({ source, textId, rootId, type, data, previous }) => {
   const href = getUrl(source, textId, rootId, type, data);
+  const textField = source === "LEGI" ? "texte" : "content";
   return (
-    <div style={{ marginLeft: 20 }}>
-      {type === "article" && (
-        <div>
-          ▸ <Badge title={data.etat} style={{ marginRight: 10 }} />
-          <a href={href} target="_blank">
+    <tr>
+      <td width="100">
+        <BadgeEtat etat={data.etat} />
+      </td>
+      <td>
+        {type === "article" && (
+          <a href={href} rel="noopener noreferrer" target="_blank">
             Article {data.num}
           </a>
-          {previous && previous.data.etat !== data.etat && (
-            <span style={{ marginLeft: 10 }}>
-              Passage de <Badge title={previous.data.etat} /> à{" "}
-              <Badge title={data.etat} />
-            </span>
-          )}
-        </div>
-      )}
-      {type === "section" && (
-        <div>
-          ▸ <Badge title={data.etat} style={{ marginRight: 10 }} />
-          <a href={href} target="_blank">
-            Section {data.title}
+        )}
+        {type === "section" && (
+          <a href={href} rel="noopener noreferrer" target="_blank">
+            {data.title}
           </a>
-          {previous && previous.data.etat !== data.etat && (
-            <span style={{ marginLeft: 10 }}>
-              Passage de <Badge title={previous.data.etat} /> à{" "}
-              <Badge title={data.etat} />
-            </span>
-          )}
-        </div>
-      )}
-    </div>
+        )}
+        {previous && previous.data.etat !== data.etat && (
+          <div>
+            Passage de <BadgeEtat etat={previous.data.etat} /> à{" "}
+            <BadgeEtat etat={data.etat} />
+          </div>
+        )}
+        {previous && previous.data[textField] !== data[textField] && (
+          <Diff
+            inputA={data[textField]}
+            inputB={previous.data[textField]}
+            type={"words"}
+          />
+        )}
+      </td>
+    </tr>
   );
 };
 
@@ -109,12 +108,74 @@ const hasChanges = file =>
     file.changes.modified.length > 0 ||
     file.changes.removed.length > 0);
 
+const ChangesGroup = ({ changes, source, label }) =>
+  changes.length ? (
+    <React.Fragment>
+      <thead>
+        <tr>
+          <th colSpan="2" className="h5" style={{ padding: "15px 5px" }}>
+            {label} ({changes.length})
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {changes.map(f => (
+          <FileChangeDetail source={source} key={f.path} {...f} />
+        ))}
+      </tbody>
+    </React.Fragment>
+  ) : null;
+
+const ChangesDetails = ({ source, changes }) =>
+  (changes && (
+    <Table size="sm" striped>
+      {/*<thead>
+      <tr>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+      </tr>
+    </thead>*/}
+      <ChangesGroup source={source} changes={changes.added} label="Nouveaux" />
+      <ChangesGroup
+        source={source}
+        changes={changes.modified}
+        label="Modifiés"
+      />
+      <ChangesGroup
+        source={source}
+        changes={changes.removed}
+        label="Supprimés"
+      />
+    </Table>
+  )) ||
+  null;
+
+const getLegiId = path =>
+  path.replace(/^data\/((?:LEGITEXT|KALICONT)\d+)\.json/, "$1");
+
+const getFileUrl = (source, path) => {
+  if (source === "LEGI") {
+    return `https://www.legifrance.gouv.fr/affichCode.do?cidTexte=${getLegiId(
+      path
+    )}`;
+  } else if (source === "KALI") {
+    return `https://www.legifrance.gouv.fr/affichIDCC.do?idConvention=${getLegiId(
+      path
+    )}`;
+  }
+};
+
 const Page = ({ query, changes }) => {
   //console.log("query", query);
   //console.log("changes", changes);
   return (
     <div className="container">
-      <Nav tabs>
+      <Jumbotron style={{ padding: 30 }}>
+        <h1 className="display-3">Suivi des modifications</h1>
+      </Jumbotron>
+      <Nav tabs style={{ fontSize: "1.5em" }}>
         <NavItem>
           <NavLink
             className={classnames({ active: query.repo === "legi-data" })}
@@ -134,70 +195,46 @@ const Page = ({ query, changes }) => {
       </Nav>
       <TabContent>
         <TabPane>
-          <Row>
-            <Col sm="12">
-              {changes.map(change => (
-                <React.Fragment key={change.hash}>
-                  <h4 style={{ marginTop: 40 }}>
-                    {change.source} - {frenchDate(change.date)}
-                  </h4>
-                  {change.files.filter(hasChanges).map(file => {
-                    return (
-                      <Card key={file.path} style={{ marginBottom: 20 }}>
-                        <CardHeader style={{ fontSize: "1.2em" }}>
-                          {file.title}
-                        </CardHeader>
-                        <CardBody>
-                          <ul>
-                            {file.changes.added.length ? (
-                              <div style={{ marginTop: 20 }}>
-                                <h6>Nouveaux ({file.changes.added.length})</h6>
-                                {file.changes.added.map(f => (
-                                  <FileChangeDetail
-                                    source={change.source}
-                                    key={f.id}
-                                    {...f}
-                                  />
-                                ))}
-                              </div>
-                            ) : null}
-                            {file.changes.removed.length ? (
-                              <div style={{ marginTop: 20 }}>
-                                <h6>
-                                  Supprimés ({file.changes.removed.length})
-                                </h6>
-                                {file.changes.removed.map(f => (
-                                  <FileChangeDetail
-                                    source={change.source}
-                                    key={f.id}
-                                    {...f}
-                                  />
-                                ))}
-                              </div>
-                            ) : null}
-                            {file.changes.modified.length ? (
-                              <div style={{ marginTop: 20 }}>
-                                <h6>
-                                  Modifiés ({file.changes.modified.length})
-                                </h6>
-                                {file.changes.modified.map(f => (
-                                  <FileChangeDetail
-                                    source={change.source}
-                                    key={f.id}
-                                    {...f}
-                                  />
-                                ))}
-                              </div>
-                            ) : null}
-                          </ul>
-                        </CardBody>
-                      </Card>
-                    );
-                  })}
-                </React.Fragment>
+          {changes.map(change => (
+            <React.Fragment key={change.hash}>
+              <h4 style={{ marginTop: 20 }}>
+                Mise à jour du {frenchDate(change.date)}
+                <a
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={`https://github.com/${query.owner}/${query.repo}/commit/${change.hash}`}
+                >
+                  <Badge
+                    color="light"
+                    style={{ color: "#888", fontSize: "0.5em" }}
+                  >
+                    {change.hash.slice(0, 8)}
+                  </Badge>
+                </a>
+              </h4>
+              {change.files.filter(hasChanges).map(file => (
+                <Card key={file.path} style={{ marginBottom: 20 }}>
+                  <CardHeader>
+                    <a
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      href={getFileUrl(change.source, file.path)}
+                      style={{ color: "black" }}
+                      className="h4"
+                    >
+                      {file.title}
+                    </a>
+                  </CardHeader>
+                  <CardBody>
+                    <ChangesDetails
+                      source={change.source}
+                      changes={file.changes}
+                    />
+                  </CardBody>
+                </Card>
               ))}
-            </Col>
-          </Row>
+            </React.Fragment>
+          ))}
         </TabPane>
       </TabContent>
     </div>

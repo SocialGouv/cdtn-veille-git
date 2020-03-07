@@ -107,13 +107,13 @@ const kaliCommitMap = commitMap({
 
 // commit details never change, lets memoize them
 const memoizedLegiCommitMap = memoizee(legiCommitMap, {
-  normalizer: commit => commit.hash,
-  async: true
+  normalizer: args => args[0].hash,
+  promise: true
 });
 
 const memoizedKaliCommitMap = memoizee(kaliCommitMap, {
-  normalizer: commit => commit.hash,
-  async: true
+  normalizer: args => args[0].hash,
+  promise: true
 });
 
 const repos = {
@@ -131,10 +131,15 @@ const repos = {
   }
 };
 
+const memoizedGetLatestChanges = memoizee(getLatestChanges, {
+  normalizer: args => args[0].cloneDir,
+  promise: true
+});
+
 // /api/git/[owner]/[repo]/latest
 const latest = async (req, res) => {
   const { owner, repo } = req.query;
-
+  //console.log("latest", owner, repo);
   const repoPath = `${owner}/${repo}`;
   const repoConf = repos[repoPath];
 
@@ -144,21 +149,28 @@ const latest = async (req, res) => {
   }
 
   const start = 0;
-  const limit = 3;
+  const limit = 1;
 
+  const t = new Date();
+  console.log("get latest changes");
   const changes = (
-    await getLatestChanges({
+    await memoizedGetLatestChanges({
       cloneDir: repoConf.cloneDir,
       filterPath: repoConf.filterPath
     })
   ).slice(start, limit);
 
   //console.log("changes", changes);
-
+  const t2 = new Date();
+  console.log(t2 - t);
+  console.log("get diffs for these commits");
   const changesWithDiffs = await serialExec(
     // add some metadata to each commit
     changes.map(change => () => repoConf.commitMap(change))
   );
+  const t3 = new Date();
+  console.log(t3 - t2);
+
   // todo: special case : no content has changed, only main ccn.data
   // filter out changes
 
