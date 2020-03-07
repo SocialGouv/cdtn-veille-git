@@ -58,19 +58,36 @@ const BadgeEtat = ({ etat, style }) => (
   </span>
 );
 
-const FileChangeDetail = ({ source, textId, rootId, type, data, previous }) => {
+const getParentSection = parents =>
+  (parents && parents.length && (
+    <span title={parents.join("\n")}>{parents[parents.length - 1]} &gt; </span>
+  )) ||
+  null;
+
+const FileChangeDetail = ({
+  source,
+  textId,
+  rootId,
+  type,
+  data,
+  parents,
+  previous
+}) => {
   const href = getUrl(source, textId, rootId, type, data);
   const textField = source === "LEGI" ? "texte" : "content";
   return (
     <tr>
-      <td width="100">
+      <td width="100" align="center">
         <BadgeEtat etat={data.etat} />
       </td>
       <td>
         {type === "article" && (
-          <a href={href} rel="noopener noreferrer" target="_blank">
-            Article {data.num}
-          </a>
+          <React.Fragment>
+            {getParentSection(parents)}
+            <a href={href} rel="noopener noreferrer" target="_blank">
+              Article {data.num}
+            </a>
+          </React.Fragment>
         )}
         {type === "section" && (
           <a href={href} rel="noopener noreferrer" target="_blank">
