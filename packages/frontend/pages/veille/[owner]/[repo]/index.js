@@ -20,6 +20,7 @@ import {
   Col
 } from "reactstrap";
 import classnames from "classnames";
+import htmlText from "html-text";
 
 import { Search } from "react-feather";
 import Link from "next/link";
@@ -79,6 +80,9 @@ const FileChangeDetail = ({
 }) => {
   const href = getUrl(source, textId, rootId, type, data);
   const textField = source === "LEGI" ? "texte" : "content";
+  const content = htmlText(data[textField] || "").trim();
+  const previousContent =
+    previous && htmlText(previous.data[textField] || "").trim();
   return (
     <tr>
       <td width="100" align="center">
@@ -104,7 +108,7 @@ const FileChangeDetail = ({
             <BadgeEtat etat={data.etat} />
           </div>
         )}
-        {previous && previous.data[textField] !== data[textField] && (
+        {previous && content !== previousContent && (
           <Collapsible
             trigger={
               <div style={{ cursor: "pointer" }}>
@@ -117,11 +121,12 @@ const FileChangeDetail = ({
             }
           >
             <Diff
-              inputA={data[textField]}
-              inputB={previous.data[textField]}
+              inputA={previousContent}
+              inputB={content}
               type={"words"}
               style={{
                 padding: 5,
+                whiteSpace: "pre-line",
                 border: "1px solid silver",
                 background: "#fff",
                 borderRadius: 3
