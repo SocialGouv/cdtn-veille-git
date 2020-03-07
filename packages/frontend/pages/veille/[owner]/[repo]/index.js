@@ -262,9 +262,12 @@ const getApiUrl = () =>
   typeof document !== "undefined" ? "/api" : "http://localhost:3000/api";
 
 Page.getInitialProps = async ({ query }) => {
+  const t = new Date();
   const API_HOST = getApiUrl();
   const url = `${API_HOST}/git/${query.owner}/${query.repo}/latest`;
   const changes = await fetch(url).then(r => r.json());
+  const t2 = new Date();
+  console.log("getInitialProps", t2 - t);
   return { query, changes };
 };
 
