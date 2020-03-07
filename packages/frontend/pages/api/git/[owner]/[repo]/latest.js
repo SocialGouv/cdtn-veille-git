@@ -171,6 +171,8 @@ const latest = async (req, res) => {
   const t3 = new Date();
   console.log(t3 - t2);
 
+  console.log("res.length", JSON.stringify(changesWithDiffs, null, 2).length);
+
   // todo: special case : no content has changed, only main ccn.data
   // filter out changes
 
