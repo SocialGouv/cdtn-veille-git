@@ -20,6 +20,8 @@ import {
   Col
 } from "reactstrap";
 import classnames from "classnames";
+import Collapsible from "react-collapsible";
+import { Search } from "react-feather";
 
 import Diff from "../../../../src/Diff";
 
@@ -101,11 +103,31 @@ const FileChangeDetail = ({
           </div>
         )}
         {previous && previous.data[textField] !== data[textField] && (
-          <Diff
-            inputA={data[textField]}
-            inputB={previous.data[textField]}
-            type={"words"}
-          />
+          <Collapsible
+            trigger={
+              <div>
+                <Search
+                  size={16}
+                  style={{ marginRight: 5, verticalAlign: "middle" }}
+                />
+                Voir le diff
+              </div>
+            }
+            transitionTime={200}
+            triggerStyle={{ cursor: "pointer" }}
+          >
+            <Diff
+              inputA={data[textField]}
+              inputB={previous.data[textField]}
+              type={"words"}
+              style={{
+                padding: 5,
+                border: "1px solid silver",
+                background: "#fff",
+                borderRadius: 3
+              }}
+            />
+          </Collapsible>
         )}
       </td>
     </tr>

@@ -34,7 +34,11 @@ export default class Diff extends Component {
       }
       return <span key={index}>{part.value}</span>;
     });
-    return <div className={this.props.className}>{result}</div>;
+    return (
+      <div style={this.props.style} className={this.props.className}>
+        {result}
+      </div>
+    );
   }
 }
 
