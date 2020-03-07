@@ -20,9 +20,11 @@ import {
   Col
 } from "reactstrap";
 import classnames from "classnames";
-import Collapsible from "react-collapsible";
-import { Search } from "react-feather";
 
+import { Search } from "react-feather";
+import Link from "next/link";
+
+import Collapsible from "../../../../src/Collapsible";
 import Diff from "../../../../src/Diff";
 
 const getUrl = (source, textId, rootId, type, data) => {
@@ -105,7 +107,7 @@ const FileChangeDetail = ({
         {previous && previous.data[textField] !== data[textField] && (
           <Collapsible
             trigger={
-              <div>
+              <div style={{ cursor: "pointer" }}>
                 <Search
                   size={16}
                   style={{ marginRight: 5, verticalAlign: "middle" }}
@@ -113,8 +115,6 @@ const FileChangeDetail = ({
                 Voir le diff
               </div>
             }
-            transitionTime={200}
-            triggerStyle={{ cursor: "pointer" }}
           >
             <Diff
               inputA={data[textField]}
@@ -216,20 +216,43 @@ const Page = ({ query, changes }) => {
       </Jumbotron>
       <Nav tabs style={{ fontSize: "1.5em" }}>
         <NavItem>
-          <NavLink
-            className={classnames({ active: query.repo === "legi-data" })}
-            href="/veille/socialgouv/legi-data"
-          >
-            LEGI
-          </NavLink>
+          <Link href="/veille/[owner]/[repo]" as="/veille/socialgouv/legi-data">
+            <a
+              className={classnames({
+                "nav-link": true,
+                active: query.repo === "legi-data"
+              })}
+            >
+              LEGI
+            </a>
+          </Link>
         </NavItem>
         <NavItem>
-          <NavLink
-            className={classnames({ active: query.repo === "kali-data" })}
-            href="/veille/socialgouv/kali-data"
+          <Link href="/veille/[owner]/[repo]" as="/veille/socialgouv/kali-data">
+            <a
+              className={classnames({
+                "nav-link": true,
+                active: query.repo === "kali-data"
+              })}
+            >
+              KALI
+            </a>
+          </Link>
+        </NavItem>
+        <NavItem>
+          <Link
+            href="/veille/[owner]/[repo]"
+            as="/veille/socialgouv/fiches-vdd"
           >
-            KALI
-          </NavLink>
+            <a
+              className={classnames({
+                "nav-link": true,
+                active: query.repo === "fiches-vdd"
+              })}
+            >
+              Fiches SP
+            </a>
+          </Link>
         </NavItem>
       </Nav>
       <TabContent>
