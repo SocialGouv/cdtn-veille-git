@@ -3,47 +3,55 @@ import fetch from "isomorphic-unfetch";
 import {
   Card,
   CardBody,
-  CardTitle,
   CardHeader,
-  CardSubtitle,
   Jumbotron,
   TabContent,
   TabPane,
   Nav,
   NavItem,
-  NavLink,
   Badge,
-  Button,
-  CardText,
-  Table,
-  Row,
-  Col
+  Table
 } from "reactstrap";
 import classnames from "classnames";
 import htmlText from "html-text";
-
 import { Search } from "react-feather";
 import Link from "next/link";
 
 import Collapsible from "../../../../src/Collapsible";
 import Diff from "../../../../src/Diff";
 
-const getUrl = (source, textId, rootId, type, data) => {
-  if (source === "LEGI" && type === "article") {
-    return `https://www.legifrance.gouv.fr/affichCodeArticle.do?idArticle=${data.id}&cidTexte=${textId}`;
-  } else if (source === "LEGI" && type === "section") {
-    return `https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=${data.id}&cidTexte=${textId}`;
-  } else if (source === "KALI" && type === "article") {
-    return `https://www.legifrance.gouv.fr/affichIDCCArticle.do?idArticle=${data.id}&cidTexte=${textId}`;
-  } else if (source === "KALI" && type === "section") {
-    if (data.id.match(/^KALISCTA/)) {
-      return `https://www.legifrance.gouv.fr/affichIDCC.do?idSectionTA=${
-        data.id
-      }&idConvention=${textId || rootId}`;
-    } else if (data.id.match(/^KALITEXT/)) {
-      return `https://www.legifrance.gouv.fr/affichIDCC.do?cidTexte=${
-        data.id
-      }&idConvention=${textId || rootId}`;
+//
+// legifrance article/section-level links
+//
+// textId is the related code (LEGITEXT) or the Convention content (KALITEXT)
+// rootId is the upper container id so KALICONT for CCs
+//
+const getLegiFranceUrl = ({ source, textId, rootId, type, data }) => {
+  if (source === "LEGI") {
+    if (type === "article") {
+      // article d'un code
+      return `https://www.legifrance.gouv.fr/affichCodeArticle.do?idArticle=${data.id}&cidTexte=${textId}`;
+    } else if (type === "section") {
+      // section d'un code
+      return `https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=${data.id}&cidTexte=${textId}`;
+    }
+  }
+  if (source === "KALI") {
+    if (type === "article") {
+      // article d'une CC ou teste annexe
+      return `https://www.legifrance.gouv.fr/affichIDCCArticle.do?idArticle=${data.id}&cidTexte=${textId}`;
+    } else if (type === "section") {
+      // si section
+      if (data.id.match(/^KALISCTA/)) {
+        return `https://www.legifrance.gouv.fr/affichIDCC.do?idSectionTA=${
+          data.id
+        }&idConvention=${textId || rootId}`;
+        // si texte attaché/annexe
+      } else if (data.id.match(/^KALITEXT/)) {
+        return `https://www.legifrance.gouv.fr/affichIDCC.do?cidTexte=${
+          data.id
+        }&idConvention=${textId || rootId}`;
+      }
     }
   }
 };
@@ -78,7 +86,7 @@ const FileChangeDetail = ({
   parents,
   previous
 }) => {
-  const href = getUrl(source, textId, rootId, type, data);
+  const href = getLegiFranceUrl({ source, textId, rootId, type, data });
   const textField = source === "LEGI" ? "texte" : "content";
   const content = htmlText(data[textField] || "").trim();
   const previousContent =
@@ -191,7 +199,7 @@ const ChangesTable = ({ changes, renderChange }) =>
 const getLegiId = path =>
   path.replace(/^data\/((?:LEGITEXT|KALICONT)\d+)\.json/, "$1");
 
-const getLegiFranceUrl = (source, path) => {
+const getLegiFranceBaseUrl = (source, path) => {
   if (source === "LEGI") {
     return `https://www.legifrance.gouv.fr/affichCode.do?cidTexte=${getLegiId(
       path
@@ -202,21 +210,57 @@ const getLegiFranceUrl = (source, path) => {
     )}`;
   }
 };
-const getFicheSpUrl = fiche => {
-  if (fiche.path.match(/associations/)) {
-    return `https://www.service-public.fr/associations/vosdroits/${fiche.data.id}`;
-  } else if (fiche.path.match(/particuliers/)) {
-    return `https://www.service-public.fr/particuliers/vosdroits/${fiche.data.id}`;
-  } else if (
-    fiche.path.match(/entreprises/) ||
-    fiche.path.match(/professionnels/)
-  ) {
-    return `https://www.service-public.fr/professionnels-entreprises/vosdroits/${fiche.data.id}`;
+
+const getFicheSpUrl = (path, id) => {
+  if (path.match(/associations/)) {
+    return `https://www.service-public.fr/associations/vosdroits/${id}`;
+  } else if (path.match(/particuliers/)) {
+    return `https://www.service-public.fr/particuliers/vosdroits/${id}`;
+  } else if (path.match(/entreprises/) || path.match(/professionnels/)) {
+    return `https://www.service-public.fr/professionnels-entreprises/vosdroits/${id}`;
   }
 };
 
+const Tab = ({ label, repo, active }) => (
+  <NavItem>
+    <Link href="/veille/[owner]/[repo]" as={`/veille/socialgouv/${repo}`}>
+      <a
+        className={classnames({
+          "nav-link": true,
+          active
+        })}
+      >
+        {label}
+      </a>
+    </Link>
+  </NavItem>
+);
+
+const HashLink = ({ owner, repo, hash }) => (
+  <a
+    rel="noopener noreferrer"
+    target="_blank"
+    href={`https://github.com/${owner}/${repo}/commit/${hash}`}
+  >
+    <Badge color="light" style={{ color: "#888", fontSize: "0.5em" }}>
+      {hash.slice(0, 8)}
+    </Badge>
+  </a>
+);
+
+const sortByKey = key => (a, b) => {
+  if (a.data[key] > b.data[key]) return 1;
+  if (a.data[key] < b.data[key]) return -1;
+  return 0;
+};
+
+const sortChanges = changes => ({
+  added: changes.added.sort(sortByKey("subject")),
+  removed: changes.removed.sort(sortByKey("subject")),
+  modified: changes.modified.sort(sortByKey("subject"))
+});
+
 const Page = ({ query, changes }) => {
-  //console.log("query", query);
   console.log("changes", changes);
   return (
     <div className="container">
@@ -224,45 +268,21 @@ const Page = ({ query, changes }) => {
         <h1 className="display-3">Suivi des modifications</h1>
       </Jumbotron>
       <Nav tabs style={{ fontSize: "1.5em" }}>
-        <NavItem>
-          <Link href="/veille/[owner]/[repo]" as="/veille/socialgouv/legi-data">
-            <a
-              className={classnames({
-                "nav-link": true,
-                active: query.repo === "legi-data"
-              })}
-            >
-              LEGI
-            </a>
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link href="/veille/[owner]/[repo]" as="/veille/socialgouv/kali-data">
-            <a
-              className={classnames({
-                "nav-link": true,
-                active: query.repo === "kali-data"
-              })}
-            >
-              KALI
-            </a>
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link
-            href="/veille/[owner]/[repo]"
-            as="/veille/socialgouv/fiches-vdd"
-          >
-            <a
-              className={classnames({
-                "nav-link": true,
-                active: query.repo === "fiches-vdd"
-              })}
-            >
-              Fiches SP
-            </a>
-          </Link>
-        </NavItem>
+        <Tab
+          label="LEGI"
+          repo="legi-data"
+          active={query.repo === "legi-data"}
+        />
+        <Tab
+          label="KALI"
+          repo="kali-data"
+          active={query.repo === "kali-data"}
+        />
+        <Tab
+          label="Fiches SP"
+          repo="fiches-vdd"
+          active={query.repo === "fiches-vdd"}
+        />
       </Nav>
       <TabContent>
         <TabPane>
@@ -270,32 +290,27 @@ const Page = ({ query, changes }) => {
             <React.Fragment key={change.hash}>
               <h4 style={{ marginTop: 20 }}>
                 Mise à jour du {frenchDate(change.date)}
-                <a
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  href={`https://github.com/${query.owner}/${query.repo}/commit/${change.hash}`}
-                >
-                  <Badge
-                    color="light"
-                    style={{ color: "#888", fontSize: "0.5em" }}
-                  >
-                    {change.hash.slice(0, 8)}
-                  </Badge>
-                </a>
+                <HashLink
+                  owner={query.owner}
+                  repo={query.repo}
+                  hash={change.hash}
+                />
               </h4>
               {change.source === "FICHES-SP" && (
                 <ChangesTable
                   source={change.source}
-                  changes={change.changes}
+                  changes={sortChanges(change.changes)}
                   renderChange={change => (
                     <tr>
-                      <td width="100" align="center">
-                        {change.data.subject}
-                      </td>
-                      <td>
+                      <td width="100" align="left">
+                        {change.data.theme && (
+                          <div className="text-muted">
+                            {change.data.subject} | {change.data.theme}
+                          </div>
+                        )}
                         <a
                           target="_blank"
-                          href={getFicheSpUrl(change)}
+                          href={getFicheSpUrl(change.path, change.data.id)}
                           rel="noopener noreferrer"
                         >
                           {change.data.title}
@@ -311,7 +326,7 @@ const Page = ({ query, changes }) => {
                     <a
                       rel="noopener noreferrer"
                       target="_blank"
-                      href={getLegiFranceUrl(change.source, file.path)}
+                      href={getLegiFranceBaseUrl(change.source, file.path)}
                       style={{ color: "black" }}
                       className="h4"
                     >

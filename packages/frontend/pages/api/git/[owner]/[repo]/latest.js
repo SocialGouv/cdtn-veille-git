@@ -1,9 +1,4 @@
-import {
-  sync,
-  getLatestChanges,
-  getJsonDiff,
-  getFilesChanged
-} from "@veille/git";
+import { getLatestChanges, getJsonDiff, getFilesChanged } from "@veille/git";
 import serialExec from "promise-serial-exec";
 import memoizee from "memoizee";
 
@@ -77,22 +72,6 @@ const kaliCommitMap = commitMap({
   getFileDiff: getTreeDiffKali
 });
 
-// const fichesVddCommitMap = commitMap({
-//   source: "FICHES-SP",
-//   filterPath: file => file.path.match(fichesVDDPattern)
-//   //getFileDiff: getFileDiffFichesVdd
-// });
-
-// const memoizedLegiCommitMap = memoizee(legiCommitMap, {
-//   normalizer: args => args[0].hash,
-//   promise: true
-// });
-
-// const memoizedKaliCommitMap = memoizee(kaliCommitMap, {
-//   normalizer: args => args[0].hash,
-//   promise: true
-// });
-
 // commit details never change, lets memoize them
 const memoizeCommitMap = commitMap =>
   memoizee(commitMap, {
@@ -128,8 +107,6 @@ const getFicheAriane = data => {
     fil.children.map(c => c.children[0].text).join(" > ")
   );
 };
-//   .map(e => e.children[0].text)
-// .join(" > ");
 
 const addVddData = path => {
   const fiche = require(`@socialgouv/fiches-vdd/${path}`);
@@ -221,11 +198,6 @@ const latest = async (req, res) => {
   );
   const t3 = new Date();
   console.log(t3 - t2);
-
-  console.log("res.length", JSON.stringify(changesWithDiffs, null, 2).length);
-
-  // todo: special case : no content has changed, only main ccn.data
-  // filter out changes
 
   res.json(changesWithDiffs);
 };
