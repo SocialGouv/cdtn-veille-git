@@ -207,7 +207,10 @@ const getFicheSpUrl = fiche => {
     return `https://www.service-public.fr/associations/vosdroits/${fiche.data.id}`;
   } else if (fiche.path.match(/particuliers/)) {
     return `https://www.service-public.fr/particuliers/vosdroits/${fiche.data.id}`;
-  } else if (fiche.path.match(/entreprises/)) {
+  } else if (
+    fiche.path.match(/entreprises/) ||
+    fiche.path.match(/professionnels/)
+  ) {
     return `https://www.service-public.fr/professionnels-entreprises/vosdroits/${fiche.data.id}`;
   }
 };
