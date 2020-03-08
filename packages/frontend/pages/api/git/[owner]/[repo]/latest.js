@@ -201,7 +201,7 @@ const latest = async (req, res) => {
   const limit = 1;
 
   const t = new Date();
-  console.log("get latest changes");
+  console.log("get latest changes", owner, repo);
   const changes = (
     await memoizedGetLatestChanges({
       cloneDir: repoConf.cloneDir,
