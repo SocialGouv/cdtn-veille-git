@@ -152,7 +152,7 @@ const hasChanges = file =>
     file.changes.modified.length > 0 ||
     file.changes.removed.length > 0);
 
-const ChangesGroup = ({ changes, source, label }) =>
+const ChangesGroup = ({ changes, label, renderChange }) =>
   changes.length ? (
     <React.Fragment>
       <thead>
@@ -162,34 +162,26 @@ const ChangesGroup = ({ changes, source, label }) =>
           </th>
         </tr>
       </thead>
-      <tbody>
-        {changes.map(f => (
-          <FileChangeDetail source={source} key={f.path} {...f} />
-        ))}
-      </tbody>
+      <tbody>{changes.map(renderChange)}</tbody>
     </React.Fragment>
   ) : null;
 
-const ChangesDetails = ({ source, changes }) =>
+const ChangesTable = ({ changes, renderChange }) =>
   (changes && (
     <Table size="sm" striped>
-      {/*<thead>
-      <tr>
-        <th>#</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Username</th>
-      </tr>
-    </thead>*/}
-      <ChangesGroup source={source} changes={changes.added} label="Nouveaux" />
       <ChangesGroup
-        source={source}
-        changes={changes.modified}
-        label="Modifiés"
+        changes={changes.added}
+        label="Nouveaux"
+        renderChange={renderChange}
       />
       <ChangesGroup
-        source={source}
+        changes={changes.modified}
+        label="Modifiés"
+        renderChange={renderChange}
+      />
+      <ChangesGroup
         changes={changes.removed}
+        renderChange={renderChange}
         label="Supprimés"
       />
     </Table>
@@ -199,7 +191,7 @@ const ChangesDetails = ({ source, changes }) =>
 const getLegiId = path =>
   path.replace(/^data\/((?:LEGITEXT|KALICONT)\d+)\.json/, "$1");
 
-const getFileUrl = (source, path) => {
+const getLegiFranceUrl = (source, path) => {
   if (source === "LEGI") {
     return `https://www.legifrance.gouv.fr/affichCode.do?cidTexte=${getLegiId(
       path
@@ -210,10 +202,19 @@ const getFileUrl = (source, path) => {
     )}`;
   }
 };
+const getFicheSpUrl = fiche => {
+  if (fiche.path.match(/associations/)) {
+    return `https://www.service-public.fr/associations/vosdroits/${fiche.data.id}`;
+  } else if (fiche.path.match(/particuliers/)) {
+    return `https://www.service-public.fr/particuliers/vosdroits/${fiche.data.id}`;
+  } else if (fiche.path.match(/entreprises/)) {
+    return `https://www.service-public.fr/professionnels-entreprises/vosdroits/${fiche.data.id}`;
+  }
+};
 
 const Page = ({ query, changes }) => {
   //console.log("query", query);
-  //console.log("changes", changes);
+  console.log("changes", changes);
   return (
     <div className="container">
       <Jumbotron style={{ padding: 30 }}>
@@ -279,13 +280,35 @@ const Page = ({ query, changes }) => {
                   </Badge>
                 </a>
               </h4>
+              {change.source === "FICHES-SP" && (
+                <ChangesTable
+                  source={change.source}
+                  changes={change.changes}
+                  renderChange={change => (
+                    <tr>
+                      <td width="100" align="center">
+                        {change.data.subject}
+                      </td>
+                      <td>
+                        <a
+                          target="_blank"
+                          href={getFicheSpUrl(change)}
+                          rel="noopener noreferrer"
+                        >
+                          {change.data.title}
+                        </a>
+                      </td>
+                    </tr>
+                  )}
+                />
+              )}
               {change.files.filter(hasChanges).map(file => (
                 <Card key={file.path} style={{ marginBottom: 20 }}>
                   <CardHeader>
                     <a
                       rel="noopener noreferrer"
                       target="_blank"
-                      href={getFileUrl(change.source, file.path)}
+                      href={getLegiFranceUrl(change.source, file.path)}
                       style={{ color: "black" }}
                       className="h4"
                     >
@@ -293,9 +316,16 @@ const Page = ({ query, changes }) => {
                     </a>
                   </CardHeader>
                   <CardBody>
-                    <ChangesDetails
+                    <ChangesTable
                       source={change.source}
                       changes={file.changes}
+                      renderChange={change2 => (
+                        <FileChangeDetail
+                          source={change.source}
+                          key={change2.path}
+                          {...change2}
+                        />
+                      )}
                     />
                   </CardBody>
                 </Card>

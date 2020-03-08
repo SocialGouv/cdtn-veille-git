@@ -4,6 +4,7 @@ const { getJsonFile } = require("./getJsonFile");
 const { getLatestChanges } = require("./getLatestChanges");
 const { getRepoHistory } = require("./getRepoHistory");
 const { getPreviousSha } = require("./getPreviousSha");
+const { getFilesChanged } = require("./getFilesChanged");
 const { sync } = require("./sync");
 
 module.exports = {
@@ -13,5 +14,6 @@ module.exports = {
   getLatestChanges,
   getRepoHistory,
   getPreviousSha,
+  getFilesChanged,
   sync
 };

@@ -46,7 +46,7 @@ const addContext = node => ({
 });
 
 // dont include children in final results
-const stripChildren = ({ children, ...props }) => props;
+const stripChildren = node => node; //({ children, ...props }) => props;
 
 // return diffed articles nodes
 const compareArticles = (tree1, tree2, comparator) => {
