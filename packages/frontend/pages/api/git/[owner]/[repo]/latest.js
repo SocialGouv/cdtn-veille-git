@@ -4,6 +4,12 @@ import memoizee from "memoizee";
 
 import { compareArticles } from "../../../../../src/compareArticles";
 
+/*
+Compute usable diffs from our git repos
+Process file changes (ex: AST)
+Add some metadata to the commits
+*/
+
 const compareLegiArticles = (tree1, tree2) =>
   compareArticles(
     tree1,

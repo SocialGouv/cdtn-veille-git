@@ -9,7 +9,9 @@ const Home = () => (
       <br />
       <br />
       <Link href="/veille/[owner]/[repo]" as="/veille/socialgouv/legi-data">
-        <Button color="primary">Accéder à la veille</Button>
+        <Button size="lg" color="primary">
+          Accéder au suivi
+        </Button>
       </Link>
     </Jumbotron>
   </div>
