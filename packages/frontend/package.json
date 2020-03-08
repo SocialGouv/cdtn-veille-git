@@ -32,7 +32,13 @@
     "extends": [
       "@socialgouv/eslint-config-recommended",
       "@socialgouv/eslint-config-react"
-    ]
+    ],
+    "rules": {
+      "jsx-a11y/anchor-is-valid": "warn",
+      "react/prop-types": "warn",
+      "jsx-a11y/click-events-have-key-events": "warn",
+      "jsx-a11y/no-static-element-interactions": "warn"
+    }
   },
   "devDependencies": {
     "@socialgouv/eslint-config-react": "^0.17.0",
