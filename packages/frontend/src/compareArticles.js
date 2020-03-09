@@ -10,6 +10,7 @@ const getParents = node => {
   return chain;
 };
 
+// find the first parent text id to make legifrance links later
 const getParentTextId = node => {
   let id;
   node = node.parent;
@@ -27,6 +28,7 @@ const getParentTextId = node => {
   return id;
 };
 
+// find the root text id to make legifrance links later
 const getRootId = node => {
   let id;
   while (node) {
@@ -36,19 +38,15 @@ const getRootId = node => {
   return id;
 };
 
-const stripArticle = article => ({
-  ...article,
-  parents: getParents(article),
-  textId: getParentTextId(article),
-  rootId: getRootId(article)
+const addContext = node => ({
+  ...node,
+  parents: getParents(node),
+  textId: getParentTextId(node),
+  rootId: getRootId(node)
 });
 
-const stripSection = section => ({
-  ...section,
-  parents: getParents(section),
-  textId: getParentTextId(section),
-  rootId: getRootId(section)
-});
+// dont include children in final results
+const stripChildren = node => node; //({ children, ...props }) => props;
 
 // return diffed articles nodes
 const compareArticles = (tree1, tree2, comparator) => {
@@ -56,10 +54,10 @@ const compareArticles = (tree1, tree2, comparator) => {
   const parentsTree2 = parents(tree2);
 
   // all articles from tree1
-  const articles1 = selectAll("article", parentsTree1).map(stripArticle);
+  const articles1 = selectAll("article", parentsTree1).map(addContext);
   const articles1cids = articles1.map(a => a.data.cid);
   // all articles from tree2
-  const articles2 = selectAll("article", parentsTree2).map(stripArticle);
+  const articles2 = selectAll("article", parentsTree2).map(addContext);
   const articles2cids = articles2.map(a => a.data.cid);
 
   // new : articles in tree2 not in tree1
@@ -85,7 +83,7 @@ const compareArticles = (tree1, tree2, comparator) => {
   );
 
   // all sections from tree1
-  const sections1 = selectAll("section", parentsTree1).map(stripSection);
+  const sections1 = selectAll("section", parentsTree1).map(addContext);
 
   // special case, kali sections have no id, but cid
   const idField = (sections1[0].data.cid && "cid") || "id";
@@ -93,7 +91,7 @@ const compareArticles = (tree1, tree2, comparator) => {
   const sections1cids = sections1.map(a => a.data[idField]);
 
   // all sections from tree2
-  const sections2 = selectAll("section", parentsTree2).map(stripSection);
+  const sections2 = selectAll("section", parentsTree2).map(addContext);
   const sections2cids = sections2.map(a => a.data[idField]);
 
   // new : sections in tree2 not in tree1
@@ -121,8 +119,8 @@ const compareArticles = (tree1, tree2, comparator) => {
   );
 
   const changes = {
-    added: [...newSections, ...newArticles],
-    removed: [...missingSections, ...missingArticles],
+    added: [...newSections, ...newArticles].map(stripChildren),
+    removed: [...missingSections, ...missingArticles].map(stripChildren),
     modified: [
       ...modifiedSections.map(modif => ({
         ...modif,
@@ -134,7 +132,7 @@ const compareArticles = (tree1, tree2, comparator) => {
         // add the previous version in the result so we can diff later
         previous: articles1.find(a => a.data.cid === modif.data.cid)
       }))
-    ]
+    ].map(stripChildren)
   };
 
   return changes;

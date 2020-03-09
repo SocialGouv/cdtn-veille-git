@@ -6,6 +6,7 @@ RUN mkdir -p /tmp/clones/socialgouv
 
 RUN git clone https://github.com/SocialGouv/legi-data /tmp/clones/socialgouv/legi-data
 RUN git clone https://github.com/SocialGouv/kali-data /tmp/clones/socialgouv/kali-data
+RUN git clone https://github.com/SocialGouv/fiches-vdd /tmp/clones/socialgouv/fiches-vdd
 
 WORKDIR /app
 
