@@ -981,7 +981,7 @@
     p-all "^2.1.0"
     simple-oauth2 "^3.1.0"
 
-"@socialgouv/eslint-config-react@^0.17.0":
+"@socialgouv/eslint-config-react@0.17.0":
   version "0.17.0"
   resolved "https://registry.yarnpkg.com/@socialgouv/eslint-config-react/-/eslint-config-react-0.17.0.tgz#223676beb37a0fb7d5bfee454699e7b98cd1321d"
   integrity sha512-g7UlrRBt8TRTFw9LCF7qBCE/YkUxk3WUwDKiJ/o1G/0PU8Ky1GRj4csXLWB7EZLvS4Ywg3UO+h2+dbDWB9gcug==
@@ -992,7 +992,7 @@
     eslint-plugin-react "~7.18.3"
     eslint-plugin-react-hooks "~2.4.0"
 
-"@socialgouv/eslint-config-recommended@^0.17.0":
+"@socialgouv/eslint-config-recommended@0.17.0", "@socialgouv/eslint-config-recommended@^0.17.0":
   version "0.17.0"
   resolved "https://registry.yarnpkg.com/@socialgouv/eslint-config-recommended/-/eslint-config-recommended-0.17.0.tgz#ede5fa2b80e7e009aff3b8a31c31f79e422de975"
   integrity sha512-aX9+TehWxdUWxfKnFT/1EXBVfrfI/gYAc2UOchAPtKk5LTHfrnVBUsP3JStN6T0m2BDkM0XT5tQG2aLqwM2O5A==
@@ -3026,7 +3026,7 @@ eslint-visitor-keys@^1.0.0, eslint-visitor-keys@^1.1.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.1.0.tgz#e2a82cea84ff246ad6fb57f9bde5b46621459ec2"
   integrity sha512-8y9YjtM1JBJU/A9Kc+SbaOV4y29sSWckBwMHa+FGtVj5gN/sbnKDf6xJUl+8g7FAij9LVaP8C24DUiH/f/2Z9A==
 
-eslint@^6.8.0:
+eslint@6.8.0:
   version "6.8.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.8.0.tgz#62262d6729739f9275723824302fb227c8c93ffb"
   integrity sha512-K+Iayyo2LtyYhDSYwz5D5QdWw0hCacNzyq1Y821Xna2xSJj7cijoLLYmLxTQgcgZ9mC61nryMy9S7GRbYpI5Ig==
@@ -5793,7 +5793,7 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^1.19.1:
+prettier@1.19.1:
   version "1.19.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"
   integrity sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
