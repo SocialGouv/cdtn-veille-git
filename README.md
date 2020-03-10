@@ -4,6 +4,8 @@ API + UI pour reporter les changements de contenus sur des repos GIT.
 
 ## Dev
 
+Utiliser [clone.sh](./clone.sh) pour récupérer les repos dans `/tmp/clones`.
+
 ```
 yarn
 yarn dev
