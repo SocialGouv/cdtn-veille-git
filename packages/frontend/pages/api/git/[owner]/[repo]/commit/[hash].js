@@ -32,7 +32,7 @@ const getChanges = async (req, res) => {
   const t = new Date();
   console.log("get commit", owner, repo, hash);
 
-  const commit = await memoizedShowCommit({
+  const commit = await showCommit({
     cloneDir: repoConf.cloneDir,
     filterPath: repoConf.filterPath,
     hash
@@ -48,6 +48,13 @@ const getChanges = async (req, res) => {
   console.log(t3 - t2);
 
   res.json(changes);
+};
+
+export const getStaticPaths = async () => {
+  console.log("wahhhht");
+  return {
+    paths: []
+  };
 };
 
 export default getChanges;

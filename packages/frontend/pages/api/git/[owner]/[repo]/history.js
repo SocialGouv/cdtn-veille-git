@@ -18,16 +18,11 @@ const getHistory = async (req, res) => {
     return;
   }
 
-  const start = 0;
-  const limit = 50;
-
   console.log("get latest changes", owner, repo);
-  const history = (
-    await memoizedGetLatestChanges({
-      cloneDir: repoConf.cloneDir,
-      filterPath: repoConf.filterPath
-    })
-  ).slice(start, limit);
+  const history = await getLatestChanges({
+    cloneDir: repoConf.cloneDir,
+    filterPath: repoConf.filterPath
+  });
 
   res.json(history);
 };
