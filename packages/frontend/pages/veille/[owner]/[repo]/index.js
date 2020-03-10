@@ -5,12 +5,15 @@ import {
   CardBody,
   CardHeader,
   Jumbotron,
+  ListGroup,
+  ListGroupItem,
   TabContent,
   TabPane,
   Nav,
   NavItem,
-  Badge,
-  Table
+  Table,
+  Row,
+  Col
 } from "reactstrap";
 import classnames from "classnames";
 import htmlText from "html-text";
@@ -18,7 +21,8 @@ import { Search } from "react-feather";
 import Link from "next/link";
 
 import Collapsible from "../../../../src/Collapsible";
-import Diff from "../../../../src/Diff";
+import { Diff } from "../../../../src/Diff";
+import { HashLink } from "../../../../src/HashLink";
 
 //
 // legifrance article/section-level links
@@ -148,6 +152,7 @@ const FileChangeDetail = ({
 };
 
 const frenchDate = str =>
+  str &&
   str
     .slice(0, 10)
     .split("-")
@@ -178,19 +183,19 @@ const ChangesTable = ({ changes, renderChange }) =>
   (changes && (
     <Table size="sm" striped>
       <ChangesGroup
-        changes={changes.added}
         label="Nouveaux"
+        changes={changes.added}
         renderChange={renderChange}
       />
       <ChangesGroup
-        changes={changes.modified}
         label="Modifiés"
+        changes={changes.modified}
         renderChange={renderChange}
       />
       <ChangesGroup
+        label="Supprimés"
         changes={changes.removed}
         renderChange={renderChange}
-        label="Supprimés"
       />
     </Table>
   )) ||
@@ -236,18 +241,6 @@ const Tab = ({ label, repo, active }) => (
   </NavItem>
 );
 
-const HashLink = ({ owner, repo, hash }) => (
-  <a
-    rel="noopener noreferrer"
-    target="_blank"
-    href={`https://github.com/${owner}/${repo}/commit/${hash}`}
-  >
-    <Badge color="light" style={{ color: "#888", fontSize: "0.5em" }}>
-      {hash.slice(0, 8)}
-    </Badge>
-  </a>
-);
-
 const sortByKey = key => (a, b) => {
   if (a.data[key] > b.data[key]) return 1;
   if (a.data[key] < b.data[key]) return -1;
@@ -260,13 +253,14 @@ const sortChanges = changes => ({
   modified: changes.modified.sort(sortByKey("subject"))
 });
 
-const Page = ({ query, changes }) => {
-  console.log("changes", changes);
+const Page = ({ query, commit, history }) => {
+  console.log("commit, history", commit, history);
   return (
-    <div className="container">
+    <div className="container-fluid">
       <Jumbotron style={{ padding: 30 }}>
         <h1 className="display-3">Suivi des modifications</h1>
       </Jumbotron>
+
       <Nav tabs style={{ fontSize: "1.5em" }}>
         <Tab
           label="LEGI"
@@ -285,71 +279,96 @@ const Page = ({ query, changes }) => {
         />
       </Nav>
       <TabContent>
-        <TabPane>
-          {changes.map(change => (
-            <React.Fragment key={change.hash}>
-              <h4 style={{ marginTop: 20 }}>
-                Mise à jour du {frenchDate(change.date)}
-                <HashLink
-                  owner={query.owner}
-                  repo={query.repo}
-                  hash={change.hash}
-                />
-              </h4>
-              {change.source === "FICHES-SP" && (
-                <ChangesTable
-                  source={change.source}
-                  changes={sortChanges(change.changes)}
-                  renderChange={change => (
-                    <tr>
-                      <td width="100" align="left">
-                        {change.data.theme && (
-                          <div className="text-muted">
-                            {change.data.subject} | {change.data.theme}
-                          </div>
-                        )}
-                        <a
-                          target="_blank"
-                          href={getFicheSpUrl(change.path, change.data.id)}
-                          rel="noopener noreferrer"
-                        >
-                          {change.data.title}
-                        </a>
-                      </td>
-                    </tr>
-                  )}
-                />
-              )}
-              {change.files.filter(hasChanges).map(file => (
-                <Card key={file.path} style={{ marginBottom: 20 }}>
-                  <CardHeader>
-                    <a
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      href={getLegiFranceBaseUrl(change.source, file.path)}
-                      style={{ color: "black" }}
-                      className="h4"
+        <TabPane style={{ paddingTop: 10 }}>
+          <Row>
+            <Col xs={2}>
+              <ListGroup>
+                {history.map((commit, index) => (
+                  <ListGroupItem
+                    action
+                    key={commit.hash}
+                    active={
+                      commit.hash === query.hash ||
+                      ((query.hash === "latest" || !query.hash) && index === 0)
+                    }
+                  >
+                    <Link
+                      href={`/veille/[owner]/[repo]/commit/[hash]`}
+                      as={`/veille/${query.owner}/${query.repo}/commit/${commit.hash}`}
+                      passHref
                     >
-                      {file.title}
-                    </a>
-                  </CardHeader>
-                  <CardBody>
-                    <ChangesTable
-                      source={change.source}
-                      changes={file.changes}
-                      renderChange={change2 => (
-                        <FileChangeDetail
-                          source={change.source}
-                          key={change2.path}
-                          {...change2}
-                        />
-                      )}
+                      <span style={{ cursor: "pointer" }}>
+                        {frenchDate(commit.date)}
+                      </span>
+                    </Link>
+                    <HashLink
+                      className="float-right"
+                      owner={query.owner}
+                      repo={query.repo}
+                      hash={commit.hash}
                     />
-                  </CardBody>
-                </Card>
-              ))}
-            </React.Fragment>
-          ))}
+                  </ListGroupItem>
+                ))}
+              </ListGroup>
+            </Col>
+            <Col xs={10}>
+              <React.Fragment key={commit.hash}>
+                {commit.source === "FICHES-SP" && (
+                  <ChangesTable
+                    source={commit.source}
+                    changes={sortChanges(commit.changes)}
+                    renderChange={change => (
+                      <tr>
+                        <td width="100" align="left">
+                          {change.data.theme && (
+                            <div className="text-muted">
+                              {change.data.subject} | {change.data.theme}
+                            </div>
+                          )}
+                          <a
+                            target="_blank"
+                            href={getFicheSpUrl(change.path, change.data.id)}
+                            rel="noopener noreferrer"
+                          >
+                            {change.data.title}
+                          </a>
+                        </td>
+                      </tr>
+                    )}
+                  />
+                )}
+                {commit.source !== "FICHES-SP" &&
+                  commit.files.filter(hasChanges).map(file => (
+                    <Card key={file.path} style={{ marginBottom: 20 }}>
+                      <CardHeader>
+                        <a
+                          rel="noopener noreferrer"
+                          target="_blank"
+                          href={getLegiFranceBaseUrl(commit.source, file.path)}
+                          style={{ color: "black" }}
+                          className="h4"
+                        >
+                          {file.title}
+                        </a>
+                      </CardHeader>
+                      <CardBody>
+                        <ChangesTable
+                          source={commit.source}
+                          changes={file.changes}
+                          renderChange={change2 => (
+                            <FileChangeDetail
+                              source={commit.source}
+                              key={change2.path}
+                              {...change2}
+                            />
+                          )}
+                        />
+                      </CardBody>
+                    </Card>
+                  ))}
+              </React.Fragment>
+            </Col>
+          </Row>
         </TabPane>
       </TabContent>
     </div>
@@ -359,14 +378,25 @@ const Page = ({ query, changes }) => {
 const getApiUrl = () =>
   typeof document !== "undefined" ? "/api" : "http://localhost:3000/api";
 
+const API_HOST = getApiUrl();
+
+const getCommit = (owner, repo, hash = "latest") =>
+  fetch(`${API_HOST}/git/${owner}/${repo}/commit/${hash}`).then(r => r.json());
+
+const getHistory = (owner, repo) =>
+  fetch(`${API_HOST}/git/${owner}/${repo}/history`).then(r => r.json());
+
 Page.getInitialProps = async ({ query }) => {
   const t = new Date();
-  const API_HOST = getApiUrl();
-  const url = `${API_HOST}/git/${query.owner}/${query.repo}/latest`;
-  const changes = await fetch(url).then(r => r.json());
+  const history = await getHistory(query.owner, query.repo);
+  //  console.log("history", history);
+  const hash = query.hash || history[0].hash;
+  console.log("hash", hash);
+  const commit = await getCommit(query.owner, query.repo, hash);
+
   const t2 = new Date();
   console.log("getInitialProps", t2 - t);
-  return { query, changes };
+  return { query, commit, history };
 };
 
 export default Page;

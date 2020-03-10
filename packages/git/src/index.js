@@ -3,8 +3,9 @@ const { getJsonDiff } = require("./getJsonDiff");
 const { getJsonFile } = require("./getJsonFile");
 const { getLatestChanges } = require("./getLatestChanges");
 const { getRepoHistory } = require("./getRepoHistory");
-const { getPreviousSha } = require("./getPreviousSha");
+const { getPreviousHash } = require("./getPreviousHash");
 const { getFilesChanged } = require("./getFilesChanged");
+const { showCommit } = require("./showCommit");
 const { sync } = require("./sync");
 
 module.exports = {
@@ -13,7 +14,8 @@ module.exports = {
   getJsonFile,
   getLatestChanges,
   getRepoHistory,
-  getPreviousSha,
+  getPreviousHash,
   getFilesChanged,
+  showCommit,
   sync
 };

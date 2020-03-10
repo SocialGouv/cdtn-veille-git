@@ -1,14 +1,12 @@
-import { getLatestChanges, getJsonDiff, getFilesChanged } from "@veille/git";
 import serialExec from "promise-serial-exec";
+import { getJsonDiff, getFilesChanged } from "@veille/git";
 import memoizee from "memoizee";
 
-import { compareArticles } from "../../../../../src/compareArticles";
+import { compareArticles } from "./compareArticles";
 
-/*
-Compute usable diffs from our git repos
-Process file changes (ex: AST)
-Add some metadata to the commits
-*/
+const GIT_STORAGE = "/tmp/clones";
+
+console.log("GIT_STORAGE", GIT_STORAGE);
 
 const compareLegiArticles = (tree1, tree2) =>
   compareArticles(
@@ -27,23 +25,23 @@ const compareKaliArticles = (tree1, tree2) =>
       art1.data.etat !== art2.data.etat
   );
 
-const getTreeDiffKali = (path, sha) =>
+const getTreeDiffKali = (path, hash) =>
   getJsonDiff({
-    cloneDir: `/tmp/clones/socialgouv/kali-data`,
+    cloneDir: `${GIT_STORAGE}/socialgouv/kali-data`,
     compareFn: compareKaliArticles,
     path,
-    sha
+    hash
   }).then(({ tree2, changes }) => ({
     ...tree2.data,
     changes
   }));
 
-const getTreeDiffLegi = (path, sha) =>
+const getTreeDiffLegi = (path, hash) =>
   getJsonDiff({
-    cloneDir: `/tmp/clones/socialgouv/legi-data`,
+    cloneDir: `${GIT_STORAGE}/socialgouv/legi-data`,
     compareFn: compareLegiArticles,
     path,
-    sha
+    hash
   }).then(({ tree2, changes }) => ({
     ...tree2.data,
     changes
@@ -54,7 +52,7 @@ const kaliPattern = /^data\/KALI(?:CONT|ARTI)\d+\.json$/;
 const fichesVddPattern = /^data\/[^/]+\/.*.json$/;
 
 // add file change details to some commit
-const commitMap = ({ source, filterPath, getFileDiff }) => async commit =>
+const commitProcessor = ({ source, filterPath, getFileDiff }) => async commit =>
   await {
     source,
     ...commit,
@@ -66,22 +64,41 @@ const commitMap = ({ source, filterPath, getFileDiff }) => async commit =>
     )
   };
 
-const legiCommitMap = commitMap({
+const legiCommitProcessor = commitProcessor({
   source: "LEGI",
   filterPath: file => file.path.match(legiPattern),
   getFileDiff: getTreeDiffLegi
 });
 
-const kaliCommitMap = commitMap({
+const kaliCommitProcessor = commitProcessor({
   source: "KALI",
   filterPath: file => file.path.match(kaliPattern),
   getFileDiff: getTreeDiffKali
 });
 
-// commit details never change, lets memoize them
-const memoizeCommitMap = commitMap =>
-  memoizee(commitMap, {
-    normalizer: args => args[0].hash,
+const ficheSpCommitProcessor = async commit => {
+  const filesChanged = await getFilesChanged({
+    cloneDir: `${GIT_STORAGE}/socialgouv/fiches-vdd`,
+    hash: commit.hash
+  });
+
+  const changes = {
+    added: filesChanged.added.map(addVddData),
+    removed: filesChanged.removed.map(addVddData),
+    modified: filesChanged.modified.map(addVddData)
+  };
+
+  return {
+    source: "FICHES-SP",
+    ...commit,
+    changes
+  };
+};
+
+// commit details never change, lets memoize them by hash
+const memoizeProcessor = processor =>
+  memoizee(processor, {
+    normalizer: commit => commit[0].hash,
     promise: true
   });
 
@@ -115,7 +132,10 @@ const getFicheAriane = data => {
 };
 
 const addVddData = path => {
+  // this slow down build considerably
   const fiche = require(`@socialgouv/fiches-vdd/${path}`);
+  //{ id: "test", title: "pouet", subject: "kikoo", theme: "lol" };
+  // require(`@socialgouv/fiches-vdd/${path}`);
   return {
     path,
     data: {
@@ -130,82 +150,22 @@ const addVddData = path => {
 const repos = {
   "socialgouv/legi-data": {
     url: `https://github.com/socialgouv/legi-data.git`,
-    cloneDir: `/tmp/clones/socialgouv/legi-data`,
+    cloneDir: `${GIT_STORAGE}/socialgouv/legi-data`,
     filterPath: path => path.match(legiPattern),
-    commitMap: memoizeCommitMap(legiCommitMap)
+    processCommit: memoizeProcessor(legiCommitProcessor)
   },
   "socialgouv/kali-data": {
     url: `https://github.com/socialgouv/kali-data.git`,
-    cloneDir: `/tmp/clones/socialgouv/kali-data`,
+    cloneDir: `${GIT_STORAGE}/socialgouv/kali-data`,
     filterPath: path => path.match(kaliPattern),
-    commitMap: memoizeCommitMap(kaliCommitMap)
+    processCommit: memoizeProcessor(kaliCommitProcessor)
   },
   "socialgouv/fiches-vdd": {
     url: `https://github.com/socialgouv/fiches-vdd.git`,
-    cloneDir: `/tmp/clones/socialgouv/fiches-vdd`,
+    cloneDir: `${GIT_STORAGE}/socialgouv/fiches-vdd`,
     filterPath: path => path.match(fichesVddPattern),
-    commitMap: async commit => ({
-      ...commit,
-      ...(await getFilesChanged({
-        cloneDir: `/tmp/clones/socialgouv/fiches-vdd`,
-        hash: commit.hash
-      }).then(changes => {
-        return {
-          source: "FICHES-SP",
-          ...commit,
-          changes: {
-            added: changes.added.map(addVddData),
-            removed: changes.removed.map(addVddData),
-            modified: changes.modified.map(addVddData)
-          }
-        };
-      }))
-    })
+    processCommit: memoizeProcessor(ficheSpCommitProcessor)
   }
 };
 
-const memoizedGetLatestChanges = memoizee(getLatestChanges, {
-  normalizer: args => args[0].cloneDir,
-  promise: true
-});
-
-// /api/git/[owner]/[repo]/latest
-const latest = async (req, res) => {
-  const { owner, repo } = req.query;
-  const repoPath = `${owner}/${repo}`;
-  const repoConf = repos[repoPath];
-
-  if (!repoConf) {
-    res.status(404).json({ error: 404 });
-    return;
-  }
-
-  const start = 0;
-  const limit = 1;
-
-  const t = new Date();
-  console.log("get latest changes", owner, repo);
-  const changes = (
-    await memoizedGetLatestChanges({
-      cloneDir: repoConf.cloneDir,
-      filterPath: repoConf.filterPath
-    })
-  ).slice(start, limit);
-
-  //console.log("changes", changes);
-  const t2 = new Date();
-  console.log(t2 - t);
-  console.log("get diffs for these commits");
-  const changesWithDiffs = await serialExec(
-    // add some metadata to each commit
-    changes.map(change => () =>
-      repoConf.commitMap ? repoConf.commitMap(change) : Promise.resolve(change)
-    )
-  );
-  const t3 = new Date();
-  console.log(t3 - t2);
-
-  res.json(changesWithDiffs);
-};
-
-export default latest;
+export default repos;

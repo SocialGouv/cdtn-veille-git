@@ -21,17 +21,17 @@ const getFilesChangedByFilter = ({ cloneDir, hash, diffFilter }) => {
 const getFilesChanged = async ({ cloneDir, hash }) => {
   const added = await getFilesChangedByFilter({
     cloneDir,
-    hash: hash,
+    hash,
     diffFilter: "A"
   });
   const modified = await getFilesChangedByFilter({
     cloneDir,
-    hash: hash,
+    hash,
     diffFilter: "MTR"
   });
   const removed = await getFilesChangedByFilter({
     cloneDir,
-    hash: hash,
+    hash,
     diffFilter: "D"
   });
 

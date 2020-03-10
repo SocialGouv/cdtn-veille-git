@@ -1,5 +1,7 @@
 const Git = require("simple-git/promise");
 
+const { showCommit } = require("./showCommit");
+
 // detail affected files for each commit
 const getLatestChanges = ({ cloneDir, filterPath = () => true }) => {
   const git = Git(cloneDir);
@@ -7,23 +9,18 @@ const getLatestChanges = ({ cloneDir, filterPath = () => true }) => {
     .log(["-n", "100"])
     .then(res => res.all)
     .then(commits =>
-      commits.reduce(async (all, commit) => {
-        const files = (
-          await git.show(["--name-only", "--pretty=format:", commit.hash])
-        )
-          .split("\n")
-          .filter(Boolean)
-          // match all data files except index
-          .filter(filterPath);
-
-        return [
-          ...(await all),
-          {
+      Promise.all(
+        commits.map(commit =>
+          showCommit({
+            cloneDir,
+            filterPath,
+            hash: commit.hash
+          }).then(commitDetails => ({
             ...commit,
-            files: files.map(path => ({ path }))
-          }
-        ];
-      }, [])
+            ...commitDetails
+          }))
+        )
+      )
     )
     .then(commits => commits.filter(commit => commit.files.length));
 };
