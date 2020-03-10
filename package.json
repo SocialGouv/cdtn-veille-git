@@ -9,7 +9,7 @@
     "lint": "exit 0",
     "build": "yarn workspace @veille/frontend build",
     "dev": "yarn workspace @veille/frontend dev",
-    "start": "yarn workspace @veille/frontend start"
+    "start": "NODE_OPTIONS=\"--max-old-space-size=4096\" yarn workspace @veille/frontend start"
   },
   "workspaces": [
     "packages/*"
