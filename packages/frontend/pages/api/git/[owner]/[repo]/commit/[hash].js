@@ -32,7 +32,7 @@ const getChanges = async (req, res) => {
   const t = new Date();
   console.log("get commit", owner, repo, hash);
 
-  const commit = await memoizedShowCommit({
+  const commit = await showCommit({
     cloneDir: repoConf.cloneDir,
     filterPath: repoConf.filterPath,
     hash

@@ -25,7 +25,7 @@ const getParentTextId = node => {
     }
     node = node.parent;
   }
-  return id;
+  return id || null;
 };
 
 // find the root text id to make legifrance links later
@@ -35,14 +35,14 @@ const getRootId = node => {
     id = node.data.id;
     node = node.parent;
   }
-  return id;
+  return id || null;
 };
 
 const addContext = node => ({
   ...node,
   parents: getParents(node),
-  textId: getParentTextId(node),
-  rootId: getRootId(node)
+  textId: getParentTextId(node) || null,
+  rootId: getRootId(node) || null
 });
 
 // dont include children in final results

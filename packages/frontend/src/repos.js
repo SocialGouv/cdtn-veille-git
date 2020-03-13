@@ -111,11 +111,12 @@ const getFicheMeta = (fiche, name) =>
 const getFicheMetaText = (fiche, name) => {
   const node = getFicheMeta(fiche, name);
   return (
-    node &&
-    node.children &&
-    node.children.length &&
-    node.children[0] &&
-    node.children[0].text
+    (node &&
+      node.children &&
+      node.children.length &&
+      node.children[0] &&
+      node.children[0].text) ||
+    null
   );
 };
 
@@ -124,22 +125,23 @@ const getFicheSubject = data => getFicheMetaText(data, "dc:subject");
 const getFicheAriane = data => {
   const fil = getFicheMeta(data, "FilDAriane");
   return (
-    fil &&
-    fil.children &&
-    fil.children.length &&
-    fil.children.map(c => c.children[0].text).join(" > ")
+    (fil &&
+      fil.children &&
+      fil.children.length &&
+      fil.children.map(c => c.children[0].text).join(" > ")) ||
+    null
   );
 };
 
 const addVddData = path => {
   // this slow down build considerably
   const fiche = require(`@socialgouv/fiches-vdd/${path}`);
-  //{ id: "test", title: "pouet", subject: "kikoo", theme: "lol" };
+  //const fiche = { id: "test", title: "pouet", subject: "kikoo", theme: "lol" };
   // require(`@socialgouv/fiches-vdd/${path}`);
   return {
     path,
     data: {
-      id: fiche.id,
+      id: fiche.id || path || null,
       title: getFicheTitle(fiche),
       subject: getFicheSubject(fiche),
       theme: getFicheAriane(fiche)
@@ -152,19 +154,19 @@ const repos = {
     url: `https://github.com/socialgouv/legi-data.git`,
     cloneDir: `${GIT_STORAGE}/socialgouv/legi-data`,
     filterPath: path => path.match(legiPattern),
-    processCommit: memoizeProcessor(legiCommitProcessor)
+    processCommit: legiCommitProcessor
   },
   "socialgouv/kali-data": {
     url: `https://github.com/socialgouv/kali-data.git`,
     cloneDir: `${GIT_STORAGE}/socialgouv/kali-data`,
     filterPath: path => path.match(kaliPattern),
-    processCommit: memoizeProcessor(kaliCommitProcessor)
+    processCommit: kaliCommitProcessor
   },
   "socialgouv/fiches-vdd": {
     url: `https://github.com/socialgouv/fiches-vdd.git`,
     cloneDir: `${GIT_STORAGE}/socialgouv/fiches-vdd`,
     filterPath: path => path.match(fichesVddPattern),
-    processCommit: memoizeProcessor(ficheSpCommitProcessor)
+    processCommit: ficheSpCommitProcessor
   }
 };
 
