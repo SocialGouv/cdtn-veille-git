@@ -33,13 +33,16 @@ const excludes = [
   "bc3722cb5cb73203014bc698b24a67d2e92f79a1",
   "a42e5a7d54f4e577b6b1cb5fc91584d9da549bee",
   "70c5007483abdc0d747bcde2554680e310b75748",
-  "7b25b286f0d5854a2376c2b5c77cfda9c4c9a662"
+  "7b25b286f0d5854a2376c2b5c77cfda9c4c9a662",
+  "cfd193cd098dc290ab8343f4e446d826eeee66ae",
+  "103a873852de9798684ac3b2cec44a9c4a564fa7",
+  "7fc71c232753c82818fe7872c239ac42057dcf8e"
 ];
 
 const isExcluded = commit => excludes.includes(commit.hash);
 const isNotExcluded = commit => !isExcluded(commit);
 
-const MAX_PRERENDER_HISTORY = 5;
+const MAX_PRERENDER_HISTORY = 10;
 
 const sortByKey = key => (a, b) => {
   if (a.data[key] > b.data[key]) return 1;
