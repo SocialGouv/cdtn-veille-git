@@ -7,7 +7,7 @@
   "scripts": {
     "test": "exit 0",
     "lint": "exit 0",
-    "build": "NODE_OPTIONS=\"--max-old-space-size=8192\" yarn workspace @veille/frontend build",
+    "build": "./clone.sh && NODE_OPTIONS=\"--max-old-space-size=8192\" yarn workspace @veille/frontend build",
     "dev": "NODE_OPTIONS=\"--max-old-space-size=8192\" yarn workspace @veille/frontend dev",
     "start": "NODE_OPTIONS=\"--max-old-space-size=8192\" yarn workspace @veille/frontend start"
   },
