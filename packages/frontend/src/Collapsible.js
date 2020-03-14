@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Collapsible = ({ trigger, children }) => {
+export const Collapsible = ({ trigger, children }) => {
   const [open, setOpen] = useState(false);
   return (
     <div>
@@ -10,4 +10,3 @@ const Collapsible = ({ trigger, children }) => {
   );
 };
 
-export default Collapsible;

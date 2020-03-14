@@ -50,4 +50,11 @@ const getChanges = async (req, res) => {
   res.json(changes);
 };
 
+export const getStaticPaths = async () => {
+  console.log("wahhhht");
+  return {
+    paths: []
+  };
+};
+
 export default getChanges;

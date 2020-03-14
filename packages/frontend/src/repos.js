@@ -6,8 +6,7 @@ import { compareArticles } from "./compareArticles";
 
 const GIT_STORAGE = "/tmp/clones";
 
-console.log("GIT_STORAGE", GIT_STORAGE);
-
+// todo: ensure the diff is useful, exclude html/format changes
 const compareLegiArticles = (tree1, tree2) =>
   compareArticles(
     tree1,
@@ -16,6 +15,7 @@ const compareLegiArticles = (tree1, tree2) =>
       art1.data.texte !== art2.data.texte || art1.data.etat !== art2.data.etat
   );
 
+// todo: ensure the diff is useful, exclude html/format changes
 const compareKaliArticles = (tree1, tree2) =>
   compareArticles(
     tree1,
@@ -31,10 +31,13 @@ const getTreeDiffKali = (path, hash) =>
     compareFn: compareKaliArticles,
     path,
     hash
-  }).then(({ tree2, changes }) => ({
-    ...tree2.data,
-    changes
-  }));
+  }).then(
+    ({ tree2, changes }) =>
+      tree2 && {
+        ...tree2.data,
+        changes
+      }
+  );
 
 const getTreeDiffLegi = (path, hash) =>
   getJsonDiff({
@@ -42,10 +45,13 @@ const getTreeDiffLegi = (path, hash) =>
     compareFn: compareLegiArticles,
     path,
     hash
-  }).then(({ tree2, changes }) => ({
-    ...tree2.data,
-    changes
-  }));
+  }).then(
+    ({ tree2, changes }) =>
+      tree2 && {
+        ...tree2.data,
+        changes
+      }
+  );
 
 const legiPattern = /^data\/LEGITEXT000006072050\.json$/;
 const kaliPattern = /^data\/KALI(?:CONT|ARTI)\d+\.json$/;
@@ -135,18 +141,21 @@ const getFicheAriane = data => {
 
 const addVddData = path => {
   // this slow down build considerably
-  const fiche = require(`@socialgouv/fiches-vdd/${path}`);
-  //const fiche = { id: "test", title: "pouet", subject: "kikoo", theme: "lol" };
-  // require(`@socialgouv/fiches-vdd/${path}`);
-  return {
-    path,
-    data: {
-      id: fiche.id || path || null,
-      title: getFicheTitle(fiche),
-      subject: getFicheSubject(fiche),
-      theme: getFicheAriane(fiche)
-    }
-  };
+  try {
+    const fiche = require(`@socialgouv/fiches-vdd/${path}`);
+    //const fiche = { id: "test", title: "pouet", subject: "kikoo", theme: "lol" };
+    return {
+      path,
+      data: {
+        id: fiche.id || path || null,
+        title: getFicheTitle(fiche),
+        subject: getFicheSubject(fiche),
+        theme: getFicheAriane(fiche)
+      }
+    };
+  } catch (e) {
+    return { path, data: {} };
+  }
 };
 
 const repos = {

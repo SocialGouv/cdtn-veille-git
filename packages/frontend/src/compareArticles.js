@@ -55,30 +55,40 @@ const compareArticles = (tree1, tree2, comparator) => {
 
   // all articles from tree1
   const articles1 = selectAll("article", parentsTree1).map(addContext);
-  const articles1cids = articles1.map(a => a.data.cid);
+  const articles1cids = articles1
+    .map(a => a && a.data && a.data.cid)
+    .filter(Boolean);
   // all articles from tree2
   const articles2 = selectAll("article", parentsTree2).map(addContext);
-  const articles2cids = articles2.map(a => a.data.cid);
+  const articles2cids = articles2
+    .map(a => a && a.data && a.data.cid)
+    .filter(Boolean);
 
   // new : articles in tree2 not in tree1
   const newArticles = articles2.filter(
-    art => !articles1cids.includes(art.data.cid)
+    art => art && art.data && !articles1cids.includes(art.data.cid)
   );
   const newArticlesCids = newArticles.map(a => a.data.cid);
 
   // supressed: articles in tree1 not in tree2
   const missingArticles = articles1.filter(
-    art => !articles2cids.includes(art.data.cid)
+    art => art && art.data && !articles2cids.includes(art.data.cid)
   );
 
   // modified : articles with modified texte
   const modifiedArticles = articles2.filter(
     art =>
+      art &&
+      art.data &&
       // exclude new articles
       !newArticlesCids.includes(art.data.cid) &&
       articles1.find(
         // same article, different texte
-        art2 => art2.data.cid === art.data.cid && comparator(art, art2)
+        art2 =>
+          art2 &&
+          art2.data &&
+          art2.data.cid === art.data.cid &&
+          comparator(art, art2)
       )
   );
 
@@ -86,7 +96,9 @@ const compareArticles = (tree1, tree2, comparator) => {
   const sections1 = selectAll("section", parentsTree1).map(addContext);
 
   // special case, kali sections have no id, but cid
-  const idField = (sections1[0].data.cid && "cid") || "id";
+  const idField =
+    (sections1.length && sections1[0].data && sections1[0].data.cid && "cid") ||
+    "id";
 
   const sections1cids = sections1.map(a => a.data[idField]);
 

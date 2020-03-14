@@ -1,5 +1,4 @@
 import React from "react";
-import fetch from "isomorphic-unfetch";
 import {
   Card,
   CardBody,
@@ -16,27 +15,40 @@ import {
   Col
 } from "reactstrap";
 import classnames from "classnames";
-import htmlText from "html-text";
 import { Search } from "react-feather";
 import Link from "next/link";
 import { getLatestChanges, showCommit } from "@veille/git";
 
 import repos from "../../../../../src/repos";
-import Collapsible from "../../../../../src/Collapsible";
+import { Collapsible } from "../../../../../src/Collapsible";
 import { Diff } from "../../../../../src/Diff";
 import { HashLink } from "../../../../../src/HashLink";
 
+// exclude some heavy commits
 const excludes = [
   "525243dc3684597cca1a05a6247860258594ebb7",
   "5e0278ee32ace78e43db4016460412983aeb00cf",
-  "3c777aba29230d470b04eac9c4ba2d373001a3b2"
+  "3c777aba29230d470b04eac9c4ba2d373001a3b2",
+  "2937f0c11cdb92c81cdd933dbdf6c036ae64cc3b",
+  "bc3722cb5cb73203014bc698b24a67d2e92f79a1",
+  "a42e5a7d54f4e577b6b1cb5fc91584d9da549bee",
+  "70c5007483abdc0d747bcde2554680e310b75748",
+  "7b25b286f0d5854a2376c2b5c77cfda9c4c9a662"
 ];
 
 const isExcluded = commit => excludes.includes(commit.hash);
 const isNotExcluded = commit => !isExcluded(commit);
 
+const MAX_PRERENDER_HISTORY = 15;
+
+const sortByKey = key => (a, b) => {
+  if (a.data[key] > b.data[key]) return 1;
+  if (a.data[key] < b.data[key]) return -1;
+  return 0;
+};
+
 //
-// legifrance article/section-level links
+// legifrance article/section-level links resolution
 //
 // textId is the related code (LEGITEXT) or the Convention content (KALITEXT)
 // rootId is the upper container id so KALICONT for CCs
@@ -71,10 +83,50 @@ const getLegiFranceUrl = ({ source, textId, rootId, type, data }) => {
   }
 };
 
+const getLegiId = path =>
+  path.replace(/^data\/((?:LEGITEXT|KALICONT)\d+)\.json/, "$1");
+
+const getLegiFranceBaseUrl = (source, path) => {
+  if (source === "LEGI") {
+    return `https://www.legifrance.gouv.fr/affichCode.do?cidTexte=${getLegiId(
+      path
+    )}`;
+  } else if (source === "KALI") {
+    return `https://www.legifrance.gouv.fr/affichIDCC.do?idConvention=${getLegiId(
+      path
+    )}`;
+  }
+};
+
+const getFicheSpUrl = (path, id) => {
+  if (path && path.match(/associations/)) {
+    return `https://www.service-public.fr/associations/vosdroits/${id}`;
+  } else if (path && path.match(/particuliers/)) {
+    return `https://www.service-public.fr/particuliers/vosdroits/${id}`;
+  } else if (
+    path &&
+    (path.match(/entreprises/) || path.match(/professionnels/))
+  ) {
+    return `https://www.service-public.fr/professionnels-entreprises/vosdroits/${id}`;
+  }
+  return "#";
+};
+
+const frenchDate = str =>
+  str &&
+  str
+    .slice(0, 10)
+    .split("-")
+    .reverse()
+    .join("/");
+
 const colors = {
-  VIGUEUR: "success",
+  VIGUEUR: "info",
+  VIGUEUR_ETEN: "success",
   ABROGE: "danger",
+  PERIME: "danger",
   MODIFIE: "warning",
+  REMPLACE: "warning",
   ABROGE_DIFF: "warning"
 };
 
@@ -86,13 +138,19 @@ const BadgeEtat = ({ etat, style }) => (
   </span>
 );
 
-const getParentSection = parents =>
-  (parents && parents.length && (
-    <span title={parents.join("\n")}>{parents[parents.length - 1]} &gt; </span>
-  )) ||
-  null;
+const getParentSections = (parents, maxCount = 3) => {
+  if (parents && parents.length) {
+    const maxParents =
+      parents.length > maxCount ? Math.min(parents.length, maxCount) : 1;
+    const slice = parents.slice(parents.length - maxParents, maxParents);
+    if (slice.length) {
+      return <span title={parents.join("\n")}>{slice.join(" > ")} &gt;</span>;
+    }
+  }
+  return null;
+};
 
-const FileChangeDetail = ({
+const DilaFileChangeDetail = ({
   source,
   textId,
   rootId,
@@ -103,9 +161,8 @@ const FileChangeDetail = ({
 }) => {
   const href = getLegiFranceUrl({ source, textId, rootId, type, data });
   const textField = source === "LEGI" ? "texte" : "content";
-  const content = htmlText(data[textField] || "").trim();
-  const previousContent =
-    previous && htmlText(previous.data[textField] || "").trim();
+  const content = data[textField] || "";
+  const previousContent = previous && (previous.data[textField] || "");
   return (
     <tr>
       <td width="100" align="center">
@@ -114,16 +171,19 @@ const FileChangeDetail = ({
       <td>
         {type === "article" && (
           <React.Fragment>
-            {getParentSection(parents)}
+            {getParentSections(parents)}
             <a href={href} rel="noopener noreferrer" target="_blank">
               Article {data.num}
             </a>
           </React.Fragment>
         )}
         {type === "section" && (
-          <a href={href} rel="noopener noreferrer" target="_blank">
-            {data.title}
-          </a>
+          <React.Fragment>
+            {getParentSections(parents)}
+            <a href={href} rel="noopener noreferrer" target="_blank">
+              {data.title}
+            </a>
+          </React.Fragment>
         )}
         {previous && previous.data.etat !== data.etat && (
           <div>
@@ -161,14 +221,6 @@ const FileChangeDetail = ({
     </tr>
   );
 };
-
-const frenchDate = str =>
-  str &&
-  str
-    .slice(0, 10)
-    .split("-")
-    .reverse()
-    .join("/");
 
 const hasChanges = file =>
   file.changes &&
@@ -212,38 +264,13 @@ const ChangesTable = ({ changes, renderChange }) =>
   )) ||
   null;
 
-const getLegiId = path =>
-  path.replace(/^data\/((?:LEGITEXT|KALICONT)\d+)\.json/, "$1");
-
-const getLegiFranceBaseUrl = (source, path) => {
-  if (source === "LEGI") {
-    return `https://www.legifrance.gouv.fr/affichCode.do?cidTexte=${getLegiId(
-      path
-    )}`;
-  } else if (source === "KALI") {
-    return `https://www.legifrance.gouv.fr/affichIDCC.do?idConvention=${getLegiId(
-      path
-    )}`;
-  }
-};
-
-const getFicheSpUrl = (path, id) => {
-  if (path && path.match(/associations/)) {
-    return `https://www.service-public.fr/associations/vosdroits/${id}`;
-  } else if (path && path.match(/particuliers/)) {
-    return `https://www.service-public.fr/particuliers/vosdroits/${id}`;
-  } else if (
-    path &&
-    (path.match(/entreprises/) || path.match(/professionnels/))
-  ) {
-    return `https://www.service-public.fr/professionnels-entreprises/vosdroits/${id}`;
-  }
-  return "#";
-};
-
 const Tab = ({ label, repo, active }) => (
   <NavItem>
-    <Link href="/veille/[owner]/[repo]" as={`/veille/socialgouv/${repo}`}>
+    <Link
+      prefetch={false}
+      href="/veille/[owner]/[repo]"
+      as={`/veille/socialgouv/${repo}`}
+    >
       <a
         className={classnames({
           "nav-link": true,
@@ -256,28 +283,28 @@ const Tab = ({ label, repo, active }) => (
   </NavItem>
 );
 
-const sortByKey = key => (a, b) => {
-  if (a.data[key] > b.data[key]) return 1;
-  if (a.data[key] < b.data[key]) return -1;
-  return 0;
-};
-
 const sortChanges = changes => ({
   added: changes.added.sort(sortByKey("subject")),
   removed: changes.removed.sort(sortByKey("subject")),
   modified: changes.modified.sort(sortByKey("subject"))
 });
 
-const Page = ({ query, commit, history, ...props }) => {
+const Page = ({ query, commit, history }) => {
   if (!commit) {
-    console.log("Page: no commit");
-    return <div>waloo</div>;
+    console.log("Page.render: no commit");
+    return <div>no commit here</div>;
   }
-  console.log("Page", query.hash);
+  if (typeof window !== "undefined") {
+    console.log("Page.render", { query, commit, history });
+  }
   return (
     <div className="container-fluid">
       <Jumbotron style={{ padding: 30 }}>
-        <h1 className="display-3">Suivi des modifications</h1>
+        <h1 className="display-3">
+          <Link href="/">
+            <a>Suivi des modifications</a>
+          </Link>
+        </h1>
       </Jumbotron>
 
       <Nav tabs style={{ fontSize: "1.5em" }}>
@@ -312,6 +339,7 @@ const Page = ({ query, commit, history, ...props }) => {
                     }
                   >
                     <Link
+                      prefetch={false}
                       href={`/veille/[owner]/[repo]/commit/[hash]`}
                       as={`/veille/${query.owner}/${query.repo}/commit/${commit.hash}`}
                       passHref
@@ -332,31 +360,32 @@ const Page = ({ query, commit, history, ...props }) => {
             </Col>
             <Col xs={10}>
               <React.Fragment key={commit.hash}>
-                {commit.source === "FICHES-SP" && (
+                {(commit.source === "FICHES-SP" && (
                   <ChangesTable
                     source={commit.source}
                     changes={sortChanges(commit.changes)}
-                    renderChange={change => (
-                      <tr>
-                        <td width="100" align="left">
-                          {change.data.theme && (
-                            <div className="text-muted">
-                              {change.data.subject} | {change.data.theme}
-                            </div>
-                          )}
-                          <a
-                            target="_blank"
-                            href={getFicheSpUrl(change.path, change.data.id)}
-                            rel="noopener noreferrer"
-                          >
-                            {change.data.title}
-                          </a>
-                        </td>
-                      </tr>
-                    )}
+                    renderChange={change =>
+                      change && (
+                        <tr>
+                          <td width="100" align="left">
+                            {change.data.theme && (
+                              <div className="text-muted">
+                                {change.data.subject} | {change.data.theme}
+                              </div>
+                            )}
+                            <a
+                              target="_blank"
+                              href={getFicheSpUrl(change.path, change.data.id)}
+                              rel="noopener noreferrer"
+                            >
+                              {change.data.title}
+                            </a>
+                          </td>
+                        </tr>
+                      )
+                    }
                   />
-                )}
-                {commit.source !== "FICHES-SP" &&
+                )) ||
                   commit.files.filter(hasChanges).map(file => (
                     <Card key={file.path} style={{ marginBottom: 20 }}>
                       <CardHeader>
@@ -375,7 +404,7 @@ const Page = ({ query, commit, history, ...props }) => {
                           source={commit.source}
                           changes={file.changes}
                           renderChange={change2 => (
-                            <FileChangeDetail
+                            <DilaFileChangeDetail
                               source={commit.source}
                               key={change2.path}
                               {...change2}
@@ -394,72 +423,35 @@ const Page = ({ query, commit, history, ...props }) => {
   );
 };
 
-const getApiUrl = () =>
-  typeof document !== "undefined" ? "/api" : "http://localhost:3000/api";
+//export const getInitialProps = async ({ req, res }) => {};
 
-const API_HOST = getApiUrl();
-
-// const getCommit = (owner, repo, hash = "latest") =>
-//   fetch(`${API_HOST}/git/${owner}/${repo}/commit/${hash}`).then(r => r.json());
-
-// const getHistory = (owner, repo) =>
-//   fetch(`${API_HOST}/git/${owner}/${repo}/history`).then(r => r.json());
-
-// Page.getInitialProps = async ({ query }) => {
-//   const t = new Date();
-//   const history = await getHistory(query.owner, query.repo);
-//   //  console.log("history", history);
-//   const hash = query.hash || history[0].hash;
-//   console.log("hash", hash);
-//   const commit = await getCommit(query.owner, query.repo, hash);
-
-//   const t2 = new Date();
-//   console.log("getInitialProps", t2 - t);
-//   return { query, commit, history };
-// };
-
-export const getStaticProps = async ({ params, ...props }) => {
-  console.log("params", params, props);
-
-  //console.log("getStaticProps", a, b, c);
+export const getStaticProps = async ({ params }) => {
   const { owner, repo, hash } = params;
-
-  // return {
-  //   props: {
-  //     owner,
-  //     repo,
-  //     hash: "latest"
-  //   }
-  // };
-
   const repoPath = `${owner}/${repo}`;
   const repoConf = repos[repoPath];
 
   const t = new Date();
-  const history = await getLatestChanges({
-    cloneDir: repoConf.cloneDir,
-    filterPath: repoConf.filterPath
-  });
 
-  // console.log("history", history);
+  const history = (
+    await getLatestChanges({
+      cloneDir: repoConf.cloneDir,
+      filterPath: repoConf.filterPath
+    })
+  ).filter(isNotExcluded);
 
-  //getHistory(owner, repo);
-  // console.log("history", history);
   const commitHash = hash || history[0].hash;
-  console.log("commitHash", commitHash);
+
   const commit = await showCommit({
     cloneDir: repoConf.cloneDir,
     filterPath: repoConf.filterPath,
     hash: commitHash
   });
+
   const changes = await repoConf.processCommit(commit);
 
-  // console.log("changes", changes);
-
-  //getCommit(owner, repo, commitHash);
-
   const t2 = new Date();
-  console.log("getStaticProps", t2 - t);
+
+  console.log("getStaticProps", t2 - t, `${repoPath}/${commitHash}`);
 
   const pageProps = {
     query: {
@@ -470,16 +462,13 @@ export const getStaticProps = async ({ params, ...props }) => {
     history
   };
 
-  // console.log("props", props);
   return {
     props: pageProps
   };
 };
 
-const MAX_PRERENDER_HISTORY = 10;
-
-export const getStaticPaths = async (a, b, c) => {
-  //  console.log("getStaticPaths", a, b, c);
+export const getStaticPaths = async () => {
+  // prerender pages based on git history
   const paths = (
     await Promise.all(
       Object.keys(repos).map(async key => {
@@ -494,22 +483,13 @@ export const getStaticPaths = async (a, b, c) => {
           .map(commit => ({
             params: { owner, repo, hash: commit.hash }
           }));
-        //return { params: { owner, repo } };
-        //console.log("getStaticPaths.history", history);
-        // return [{ params: { owner: "socialgouv", repo: "legi-data" } }];
       })
     )
   ).flat();
-  // console.log("getStaticPaths", paths);
-  //console.log("paths", paths);
   return {
     paths,
-
-    // [
-    //   { params: { owner: "socialgouv", repo: "legi-data" } }
-    //   //    { params: { owner: "socialgouv", repo: "kali-data" } }
-    // ],
     fallback: true
   };
 };
+
 export default Page;
