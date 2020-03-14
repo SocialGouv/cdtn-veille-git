@@ -39,7 +39,7 @@ const excludes = [
 const isExcluded = commit => excludes.includes(commit.hash);
 const isNotExcluded = commit => !isExcluded(commit);
 
-const MAX_PRERENDER_HISTORY = 10;
+const MAX_PRERENDER_HISTORY = 5;
 
 const sortByKey = key => (a, b) => {
   if (a.data[key] > b.data[key]) return 1;
