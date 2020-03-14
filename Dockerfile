@@ -17,7 +17,7 @@ RUN yarn
 
 COPY packages ./packages
 
-RUN yarn workspace @veille/frontend build
+RUN yarn prerender
 
 ENTRYPOINT ["yarn", "workspace", "@veille/frontend", "start"]
 
