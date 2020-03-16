@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardBody,
@@ -147,7 +147,7 @@ const getParentSections = (parents, maxCount = 3) => {
       parents.length > maxCount ? Math.min(parents.length, maxCount) : 1;
     const slice = parents.slice(parents.length - maxParents, maxParents);
     if (slice.length) {
-      return <span title={parents.join("\n")}>{slice.join(" > ")} &gt;</span>;
+      return <span title={parents.join("\n")}>{slice.join(" > ")} &gt; </span>;
     }
   }
   return null;
@@ -231,19 +231,29 @@ const hasChanges = file =>
     file.changes.modified.length > 0 ||
     file.changes.removed.length > 0);
 
-const ChangesGroup = ({ changes, label, renderChange }) =>
-  changes.length ? (
-    <React.Fragment>
-      <thead>
-        <tr>
-          <th colSpan="2" className="h5" style={{ padding: "15px 5px" }}>
-            {label} ({changes.length})
-          </th>
-        </tr>
-      </thead>
-      <tbody>{changes.map(renderChange)}</tbody>
-    </React.Fragment>
-  ) : null;
+const ChangesGroup = ({ changes, label, renderChange }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    (changes.length && (
+      <React.Fragment>
+        <thead>
+          <tr>
+            <th colSpan="2" className="h5" style={{ padding: "15px 5px" }}>
+              <span
+                style={{ cursor: "pointer" }}
+                onClick={() => setOpen(!open)}
+              >
+                {(open && "▼") || "▶"} {label} ({changes.length})
+              </span>
+            </th>
+          </tr>
+        </thead>
+        {open && <tbody>{changes.map(renderChange)}</tbody>}
+      </React.Fragment>
+    )) ||
+    null
+  );
+};
 
 const ChangesTable = ({ changes, renderChange }) =>
   (changes && (
