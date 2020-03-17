@@ -142,8 +142,13 @@ const getFicheAriane = data => {
 const addVddData = path => {
   // this slow down build considerably
   try {
-    const fiche = require(`@socialgouv/fiches-vdd/${path}`);
-    //const fiche = { id: "test", title: "pouet", subject: "kikoo", theme: "lol" };
+    //const fiche = require(`@socialgouv/fiches-vdd/${path}`);
+    const fiche = {
+      id: "test",
+      title: "pouet",
+      subject: "kikoo",
+      theme: "lol"
+    };
     return {
       path,
       data: {
@@ -163,19 +168,24 @@ const repos = {
     url: `https://github.com/socialgouv/legi-data.git`,
     cloneDir: `${GIT_STORAGE}/socialgouv/legi-data`,
     filterPath: path => path.match(legiPattern),
-    processCommit: legiCommitProcessor
+    processCommit: legiCommitProcessor,
+    fileFilter: "data/LEGITEXT000006072050.json",
+    compareFn: compareLegiArticles
   },
   "socialgouv/kali-data": {
     url: `https://github.com/socialgouv/kali-data.git`,
     cloneDir: `${GIT_STORAGE}/socialgouv/kali-data`,
     filterPath: path => path.match(kaliPattern),
-    processCommit: kaliCommitProcessor
+    processCommit: kaliCommitProcessor,
+    fileFilter: "data/KALICONT*",
+    compareFn: compareKaliArticles
   },
   "socialgouv/fiches-vdd": {
     url: `https://github.com/socialgouv/fiches-vdd.git`,
     cloneDir: `${GIT_STORAGE}/socialgouv/fiches-vdd`,
     filterPath: path => path.match(fichesVddPattern),
-    processCommit: ficheSpCommitProcessor
+    processCommit: ficheSpCommitProcessor,
+    fileFilter: "data/*.xml"
   }
 };
 
