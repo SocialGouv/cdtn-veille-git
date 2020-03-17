@@ -30,7 +30,7 @@ const getChanges = async (req, res) => {
   }
 
   const t = new Date();
-  console.log("get commit", owner, repo, hash);
+  // console.log("get commit", owner, repo, hash);
 
   const commit = await showCommit({
     cloneDir: repoConf.cloneDir,
@@ -38,15 +38,15 @@ const getChanges = async (req, res) => {
     hash
   });
 
-  const t2 = new Date();
-  console.log(t2 - t);
-  console.log("get diffs for these commits");
+  // const t2 = new Date();
+  // console.log(t2 - t);
+  // console.log("get diffs for these commits");
 
   const changes = await repoConf.processCommit(commit);
 
-  const t3 = new Date();
-  console.log(t3 - t2);
-
+  // const t3 = new Date();
+  // console.log(t3 - t2);
+  console.log(`get hash changes ${owner}/${repo} in ${Date.now() - t}`);
   res.json(changes);
 };
 

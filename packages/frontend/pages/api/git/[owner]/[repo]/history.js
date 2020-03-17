@@ -17,13 +17,12 @@ const getHistory = async (req, res) => {
     res.status(404).json({ error: 404 });
     return;
   }
-
-  console.log("get latest changes", owner, repo);
+  const t0 = Date.now();
   const history = await getLatestChanges({
     cloneDir: repoConf.cloneDir,
     filterPath: repoConf.filterPath
   });
-
+  console.log(`get latest changes ${owner}/${repo} in ${Date.now() - t0}`);
   res.json(history);
 };
 
