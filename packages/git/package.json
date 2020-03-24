@@ -5,6 +5,6 @@
   "license": "MIT",
   "dependencies": {
     "mkdirp": "^1.0.3",
-    "simple-git": "^1.131.0"
+    "simple-git": "^1.132.0"
   }
 }
