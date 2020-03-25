@@ -12,7 +12,7 @@
     "html-text": "^1.0.1",
     "isomorphic-unfetch": "^3.0.0",
     "memoizee": "^0.4.14",
-    "next": "^9.2.2",
+    "next": "^9.3.1",
     "promise-serial-exec": "^1.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
