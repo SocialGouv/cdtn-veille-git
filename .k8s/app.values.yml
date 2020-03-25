@@ -22,10 +22,10 @@ deployment:
 
   resources:
     limits:
-      memory: 1024Mi
+      memory: 2048Mi
       cpu: 1000m
     requests:
-      memory: 64Mi
+      memory: 1024Mi
       cpu: 100m
 
   env:
