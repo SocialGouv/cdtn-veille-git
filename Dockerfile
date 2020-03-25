@@ -1,6 +1,6 @@
 FROM node:12-alpine
 
-RUN apk add git
+RUN apk add git python
 
 WORKDIR /app
 
