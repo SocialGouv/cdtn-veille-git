@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@socialgouv/fiches-vdd": "^1.0.189",
-    "@socialgouv/kali-data": "^1.3.30",
+    "@socialgouv/fiches-vdd": "^1.0.190",
+    "@socialgouv/kali-data": "^1.3.31",
     "@socialgouv/legi-data": "^1.1.19",
     "classnames": "^2.2.6",
     "diff": "1.2",
