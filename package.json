@@ -8,9 +8,9 @@
     "test": "exit 0",
     "lint": "exit 0",
     "build": "exit 0",
-    "prerender": "NODE_OPTIONS=\"--max-old-space-size=2048\" yarn workspace @veille/frontend build",
-    "dev": "NODE_OPTIONS=\"--max-old-space-size=2048\" yarn workspace @veille/frontend dev",
-    "start": "NODE_OPTIONS=\"--max-old-space-size=2048\" yarn workspace @veille/frontend start"
+    "prerender": "NODE_OPTIONS=\"--max-old-space-size=8192\" yarn workspace @veille/frontend build",
+    "dev": "NODE_OPTIONS=\"--max-old-space-size=8192\" yarn workspace @veille/frontend dev",
+    "start": "NODE_OPTIONS=\"--max-old-space-size=8192\" yarn workspace @veille/frontend start"
   },
   "workspaces": [
     "packages/*"
