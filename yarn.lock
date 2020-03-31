@@ -908,79 +908,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
-"@hapi/address@^2.1.2":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
-  integrity sha512-QD1PhQk+s31P1ixsX0H0Suoupp3VMXzIVMSwobR3F3MSUO2YCV0B7xqLcUw/Bh8yuvd3LhpyqLQWTNcRmp6IdQ==
-
-"@hapi/boom@7.x.x":
-  version "7.4.11"
-  resolved "https://registry.yarnpkg.com/@hapi/boom/-/boom-7.4.11.tgz#37af8417eb9416aef3367aa60fa04a1a9f1fc262"
-  integrity sha512-VSU/Cnj1DXouukYxxkes4nNJonCnlogHvIff1v1RVoN4xzkKhMXX+GRmb3NyH1iar10I9WFPDv2JPwfH3GaV0A==
-  dependencies:
-    "@hapi/hoek" "8.x.x"
-
-"@hapi/bourne@1.x.x":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@hapi/bourne/-/bourne-1.3.2.tgz#0a7095adea067243ce3283e1b56b8a8f453b242a"
-  integrity sha512-1dVNHT76Uu5N3eJNTYcvxee+jzX4Z9lfciqRRHCU27ihbUcYi+iSc2iml5Ke1LXe1SyJCLA0+14Jh4tXJgOppA==
-
-"@hapi/formula@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@hapi/formula/-/formula-1.2.0.tgz#994649c7fea1a90b91a0a1e6d983523f680e10cd"
-  integrity sha512-UFbtbGPjstz0eWHb+ga/GM3Z9EzqKXFWIbSOFURU0A/Gku0Bky4bCk9/h//K2Xr3IrCfjFNhMm4jyZ5dbCewGA==
-
-"@hapi/hoek@8.x.x", "@hapi/hoek@^8.2.4", "@hapi/hoek@^8.3.0", "@hapi/hoek@^8.5.0":
-  version "8.5.1"
-  resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-8.5.1.tgz#fde96064ca446dec8c55a8c2f130957b070c6e06"
-  integrity sha512-yN7kbciD87WzLGc5539Tn0sApjyiGHAJgKvG9W8C7O+6c7qmoQMfVs0W4bX17eqz6C78QJqqFrtgdK5EWf6Qow==
-
-"@hapi/joi@^16.1.8":
-  version "16.1.8"
-  resolved "https://registry.yarnpkg.com/@hapi/joi/-/joi-16.1.8.tgz#84c1f126269489871ad4e2decc786e0adef06839"
-  integrity sha512-wAsVvTPe+FwSrsAurNt5vkg3zo+TblvC5Bb1zMVK6SJzZqw9UrJnexxR+76cpePmtUZKHAPxcQ2Bf7oVHyahhg==
-  dependencies:
-    "@hapi/address" "^2.1.2"
-    "@hapi/formula" "^1.2.0"
-    "@hapi/hoek" "^8.2.4"
-    "@hapi/pinpoint" "^1.0.2"
-    "@hapi/topo" "^3.1.3"
-
-"@hapi/pinpoint@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@hapi/pinpoint/-/pinpoint-1.0.2.tgz#025b7a36dbbf4d35bf1acd071c26b20ef41e0d13"
-  integrity sha512-dtXC/WkZBfC5vxscazuiJ6iq4j9oNx1SHknmIr8hofarpKUZKmlUVYVIhNVzIEgK5Wrc4GMHL5lZtt1uS2flmQ==
-
-"@hapi/topo@^3.1.3":
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/@hapi/topo/-/topo-3.1.6.tgz#68d935fa3eae7fdd5ab0d7f953f3205d8b2bfc29"
-  integrity sha512-tAag0jEcjwH+P2quUfipd7liWCNX2F8NvYjQp2wtInsZxnMlypdw0FtAOLxtvvkO+GSRRbmNi8m/5y42PQJYCQ==
-  dependencies:
-    "@hapi/hoek" "^8.3.0"
-
-"@hapi/wreck@^15.1.0":
-  version "15.1.0"
-  resolved "https://registry.yarnpkg.com/@hapi/wreck/-/wreck-15.1.0.tgz#7917cd25950ce9b023f7fd2bea6e2ef72c71e59d"
-  integrity sha512-tQczYRTTeYBmvhsek/D49En/5khcShaBEmzrAaDjMrFXKJRuF8xA8+tlq1ETLBFwGd6Do6g2OC74rt11kzawzg==
-  dependencies:
-    "@hapi/boom" "7.x.x"
-    "@hapi/bourne" "1.x.x"
-    "@hapi/hoek" "8.x.x"
-
 "@next/polyfill-nomodule@9.3.1-canary.4":
   version "9.3.1-canary.4"
   resolved "https://registry.yarnpkg.com/@next/polyfill-nomodule/-/polyfill-nomodule-9.3.1-canary.4.tgz#cf25951123c8ecdfc34a2354a7fbf7a42dd3ff94"
   integrity sha512-a1tYzqpFneCGTs1fQnsuxERS1uF7BUlxgEruwv1bJAsZVi7lkWQA7p8KzBFtkpEpWkkXr9F1Yd8/8zv1U8B9IA==
-
-"@socialgouv/dila-api-client@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/dila-api-client/-/dila-api-client-1.1.0.tgz#ee8492e61171b91aafa472f9ee7c30ad960f1058"
-  integrity sha512-ZQGJOUyeSmvsf6QqMq/Ssgpo3rwfd78QUK2INvKEbHHNSxJrhTdDjmQ0/tjf6f/Qx0EqdJpbD6SViHGut1MyBQ==
-  dependencies:
-    debug "^4.1.1"
-    node-fetch "^2.6.0"
-    p-all "^2.1.0"
-    simple-oauth2 "^3.1.0"
 
 "@socialgouv/eslint-config-react@^0.17.0":
   version "0.17.0"
@@ -1003,33 +934,15 @@
     eslint-plugin-jest "~23.8.0"
     eslint-plugin-prettier "~3.1.2"
 
-"@socialgouv/fiches-vdd@^1.0.168":
-  version "1.0.168"
-  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.0.168.tgz#aa812d4ac1aa48c3d9bcabf9148a56a12972e27e"
-  integrity sha512-PqazQB+bplDL0q3lyECoztRg3y1VmL47yq1rSk56Yku4X+cA2bwmo0yOk1c1JOVvf8dSOJfFm/+Nj7tq6GiMvQ==
+"@socialgouv/fiches-vdd@^1.0.194":
+  version "1.0.194"
+  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.0.194.tgz#3ec7447cb3c5a199f008713a8d02ccb7b5d715a4"
+  integrity sha512-IHIVRwIWy9PLiul3gNyIibBXIpNrgxCwBS0ZVD1TX+KF6bHoxf1GN7HdSdTJQBqsvfhaMZfayFztDfRe+wl1UA==
   dependencies:
     node-fetch "^2.6.0"
     ora "^4.0.3"
     unzipper "^0.10.10"
     xml-js "^1.6.11"
-
-"@socialgouv/kali-data@^1.3.18":
-  version "1.3.22"
-  resolved "https://registry.yarnpkg.com/@socialgouv/kali-data/-/kali-data-1.3.22.tgz#1ed2531a4e256025697d3c0bce7554f40622f86d"
-  integrity sha512-1w0c0DATz+J9AjoawIZDUP13l2RKUTppG/ZLEs1P3pXwUxZbf7dv0Ka8v9D/LymGRwh5vbh9XPmgLaKl/29xsg==
-  dependencies:
-    "@socialgouv/dila-api-client" "^1.1.0"
-    p-map "^3.0.0"
-
-"@socialgouv/legi-data@^1.1.15":
-  version "1.1.15"
-  resolved "https://registry.yarnpkg.com/@socialgouv/legi-data/-/legi-data-1.1.15.tgz#4b290a8fd78a43ffe37a004635d43eabbd1348c2"
-  integrity sha512-Tic6LOwPJHIyRBdFkRrJvq9hxUzOJdVzdzfNDU60/ayk6l45nkQKdRhEDbFYPWxkRAvsbUKYgj9wZcJBA30VWw==
-  dependencies:
-    "@socialgouv/dila-api-client" "^1.1.0"
-    debug "^4.1.1"
-    p-all "^2.1.0"
-    p-timeout "^3.2.0"
 
 "@types/color-name@^1.1.1":
   version "1.1.1"
@@ -1257,14 +1170,6 @@ adjust-sourcemap-loader@2.0.0:
     loader-utils "1.2.3"
     object-path "0.11.4"
     regex-parser "2.2.10"
-
-aggregate-error@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/aggregate-error/-/aggregate-error-3.0.1.tgz#db2fe7246e536f40d9b5442a39e117d7dd6a24e0"
-  integrity sha512-quoaXsZ9/BLNae5yiNoUz+Nhkwz83GhWwtYFglcjEQB2NDHCIpApbqXxIFnm4Pq/Nvhrsq5sYJFyohrrxnTGAA==
-  dependencies:
-    clean-stack "^2.0.0"
-    indent-string "^4.0.0"
 
 ajv-errors@^1.0.0:
   version "1.0.1"
@@ -2067,11 +1972,6 @@ classnames@^2.2.3, classnames@^2.2.6:
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
 
-clean-stack@^2.0.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-2.2.0.tgz#ee8472dbb129e727b31e8a10a427dee9dfe4008b"
-  integrity sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==
-
 cli-cursor@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/cli-cursor/-/cli-cursor-2.1.0.tgz#b35dac376479facc3e94747d41d0d0f5238ffcb5"
@@ -2498,11 +2398,6 @@ damerau-levenshtein@^1.0.4:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.6.tgz#143c1641cb3d85c60c32329e26899adea8701791"
   integrity sha512-JVrozIeElnj3QzfUIt8tB8YMluBJom4Vw9qTPpjGYQ9fYlB3D/rb6OordUxf3xeFB35LKWs0xqcO5U6ySvBtug==
-
-date-fns@^2.9.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.10.0.tgz#abd10604d8bafb0bcbd2ba2e9b0563b922ae4b6b"
-  integrity sha512-EhfEKevYGWhWlZbNeplfhIU/+N+x0iCIx7VzKlXma2EdQyznVlZhCptXUY+BegNpPW2kjdx15Rvq503YcXXrcA==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.9:
   version "2.6.9"
@@ -3746,11 +3641,6 @@ imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
   integrity sha1-khi5srkoojixPcT7a21XbyMUU+o=
-
-indent-string@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/indent-string/-/indent-string-4.0.0.tgz#624f8f4497d619b2d9768531d58f4122854d7251"
-  integrity sha512-EdDDZu4A2OyIK7Lr/2zG+w5jmbuk1DVBnEwREQvBzspBJkCEbRa8GxU1lghYcaGJCnRWibjDXlq779X1/y5xwg==
 
 indexes-of@^1.0.1:
   version "1.0.1"
@@ -5126,18 +5016,6 @@ osenv@^0.1.4:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
 
-p-all@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/p-all/-/p-all-2.1.0.tgz#91419be56b7dee8fe4c5db875d55e0da084244a0"
-  integrity sha512-HbZxz5FONzz/z2gJfk6bFca0BCiSRF8jU3yCsWOen/vR6lZjfPOu/e7L3uFzTW1i0H8TlC3vqQstEJPQL4/uLA==
-  dependencies:
-    p-map "^2.0.0"
-
-p-finally@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/p-finally/-/p-finally-1.0.0.tgz#3fbcfb15b899a44123b34b6dcc18b724336a2cae"
-  integrity sha1-P7z7FbiZpEEjs0ttzBi3JDNqLK4=
-
 p-limit@^1.1.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-1.3.0.tgz#b86bd5f0c25690911c7590fcbfc2010d54b3ccb8"
@@ -5177,25 +5055,6 @@ p-map@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/p-map/-/p-map-1.2.0.tgz#e4e94f311eabbc8633a1e79908165fca26241b6b"
   integrity sha512-r6zKACMNhjPJMTl8KcFH4li//gkrXWfbD6feV8l6doRHlzljFWGJ2AP6iKaCJXyZmAUMOPtvbW7EXkbWO/pLEA==
-
-p-map@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/p-map/-/p-map-2.1.0.tgz#310928feef9c9ecc65b68b17693018a665cea175"
-  integrity sha512-y3b8Kpd8OAN444hxfBbFfj1FY/RjtTd8tzYwhUqNYXx0fXx2iX4maP4Qr6qhIKbQXI02wTLAda4fYUbDagTUFw==
-
-p-map@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/p-map/-/p-map-3.0.0.tgz#d704d9af8a2ba684e2600d9a215983d4141a979d"
-  integrity sha512-d3qXVTF/s+W+CdJ5A29wywV2n8CQQYahlgz2bFiA+4eVNJbHJodPZ+/gXwPGh0bOqA+j8S+6+ckmvLGPk1QpxQ==
-  dependencies:
-    aggregate-error "^3.0.0"
-
-p-timeout@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/p-timeout/-/p-timeout-3.2.0.tgz#c7e17abc971d2a7962ef83626b35d635acf23dfe"
-  integrity sha512-rhIwUycgwwKcP9yTOOFK/AKsAopjjCakVqLHePO3CC6Mir1Z99xT+R63jZxAT5lFZLa2inS5h+ZS2GvR99/FBg==
-  dependencies:
-    p-finally "^1.0.0"
 
 p-try@^1.0.0:
   version "1.0.0"
@@ -6521,17 +6380,6 @@ simple-git@^1.131.0:
   integrity sha512-z/art7YYtmPnnLItT/j+nKwJt6ap6nHZ4D8sYo9PdCKK/ug56SN6m/evfxJk7uDV3e9JuCa8qIyDU2P3cxmiNQ==
   dependencies:
     debug "^4.0.1"
-
-simple-oauth2@^3.1.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/simple-oauth2/-/simple-oauth2-3.3.0.tgz#c97c48a809669d6f303b166397ba925a25474215"
-  integrity sha512-mBWkLHH7XY6WSy271j6CeEHuGN61K/TeUawXpX0K9tsLnlrqt9bpXYR/tYMI6+o6QWqSdvVaItGlZKOfMVFOGA==
-  dependencies:
-    "@hapi/hoek" "^8.5.0"
-    "@hapi/joi" "^16.1.8"
-    "@hapi/wreck" "^15.1.0"
-    date-fns "^2.9.0"
-    debug "^4.1.1"
 
 slice-ansi@^2.1.0:
   version "2.1.0"
