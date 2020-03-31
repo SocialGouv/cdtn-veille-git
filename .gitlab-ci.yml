@@ -8,3 +8,4 @@ variables:
   #RANCHER_PROJECT_ID: "c-gsm8d:p-pwpk6" # "default" project id here
   PORT: 3000
   VALUES_FILE: ./.k8s/app.values.yml # Your values
+  DOCKER_BUILD_ARGS: "--no-cache"
