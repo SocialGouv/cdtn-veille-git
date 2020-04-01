@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@socialgouv/fiches-vdd": "^1.0.194",
+    "@socialgouv/fiches-vdd": "^1.0.196",
     "classnames": "^2.2.6",
     "diff": "1.2",
     "html-text": "^1.0.1",
