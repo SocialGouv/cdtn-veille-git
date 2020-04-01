@@ -110,36 +110,6 @@ const memoizeProcessor = (processor) =>
     promise: true,
   });
 
-const getFicheMeta = (fiche, name) =>
-  fiche &&
-  fiche.children &&
-  fiche.children.length &&
-  fiche.children[0].children.find((c) => c.name === name);
-
-const getFicheMetaText = (fiche, name) => {
-  const node = getFicheMeta(fiche, name);
-  return (
-    (node &&
-      node.children &&
-      node.children.length &&
-      node.children[0] &&
-      node.children[0].text) ||
-    null
-  );
-};
-
-const getFicheTitle = (data) => getFicheMetaText(data, "dc:title");
-const getFicheSubject = (data) => getFicheMetaText(data, "dc:subject");
-const getFicheAriane = (data) => {
-  const fil = getFicheMeta(data, "FilDAriane");
-  return (
-    (fil &&
-      fil.children &&
-      fil.children.length &&
-      fil.children.map((c) => c.children[0].text).join(" > ")) ||
-    null
-  );
-};
 const fichesVDD = require(`@socialgouv/fiches-vdd/data/index.json`);
 
 const addVddData = (path) => {
@@ -149,12 +119,14 @@ const addVddData = (path) => {
       .split("/");
 
     const fiche = fichesVDD.find((f) => f.type === type && f.id === id);
-    if (!fiche) {
-      console.log("type, id", type, id, path);
-    }
     return {
       path,
-      data: fiche,
+      data: {
+        id: fiche.id || path || null,
+        title: fiche.title || null,
+        subject: fiche.subject || null,
+        theme: fiche.theme || null,
+      },
     };
   } catch (e) {
     return { path, data: {} };
