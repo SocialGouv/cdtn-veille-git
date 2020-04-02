@@ -1,6 +1,6 @@
 const { getFileHistory } = require("./getFileHistory");
 
-const getPreviousSha = async (cloneDir, path, sha) => {
+const getPreviousHash = async (cloneDir, path, hash) => {
   const history = Array.from(
     await getFileHistory({
       cloneDir,
@@ -8,11 +8,11 @@ const getPreviousSha = async (cloneDir, path, sha) => {
     })
   );
   //console.log("history", history);
-  const idx = history.findIndex(log => log.hash === sha);
+  const idx = history.findIndex(log => log.hash === hash);
   const previous =
     idx > -1 && idx < history.length - 1 && history[idx + 1].hash;
 
   return previous;
 };
 
-module.exports = { getPreviousSha };
+module.exports = { getPreviousHash };

@@ -4,7 +4,8 @@ include:
     ref: v8.0.0
 
 variables:
-  PROJECT: "veille-git"
-  #RANCHER_PROJECT_ID: "c-gsm8d:p-pwpk6" # "default" project id here
+  PROJECT: "cdtn-veille-git"
+  RANCHER_PROJECT_ID: "c-kk8xm:p-8n8mv" # "default" project id here
   PORT: 3000
   VALUES_FILE: ./.k8s/app.values.yml # Your values
+  DOCKER_BUILD_ARGS: "--no-cache"

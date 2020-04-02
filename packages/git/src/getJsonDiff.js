@@ -1,26 +1,26 @@
 const { getJsonFile } = require("./getJsonFile");
-const { getPreviousSha } = require("./getPreviousSha");
+const { getPreviousHash } = require("./getPreviousHash");
 
 // exec a compare function on the last diff of given JSON file
-const getJsonDiff = async ({ compareFn, cloneDir, path, sha }) => {
+const getJsonDiff = async ({ compareFn, cloneDir, path, hash }) => {
   try {
-    const previousSha = await getPreviousSha(cloneDir, path, sha);
+    const previousHash = await getPreviousHash(cloneDir, path, hash);
 
     const tree1 = await getJsonFile({
       cloneDir,
       path,
-      oid: previousSha
+      oid: previousHash
     });
     if (!tree1) {
-      console.log("cannot load1", path, previousSha);
+      console.log("cannot load1", path, previousHash);
     }
     const tree2 = await getJsonFile({
       cloneDir,
       path,
-      oid: sha
+      oid: hash
     });
     if (!tree2) {
-      console.log("cannot load2", path, sha);
+      console.log("cannot load2", path, hash);
     }
 
     return {

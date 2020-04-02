@@ -2,9 +2,9 @@ image:
   repository: registry.gitlab.factory.social.gouv.fr/socialgouv/veille-git
 
 labels:
-  app.kubernetes.io/part-of: veille-git
-  owner: veille-git
-  team: veille-git
+  app.kubernetes.io/part-of: cdtn-veille-git
+  owner: cdtn-veille-git
+  team: cdtn-veille-git
 
 deployment:
   annotations:
@@ -22,10 +22,10 @@ deployment:
 
   resources:
     limits:
-      memory: 1024Mi
+      memory: 2048Mi
       cpu: 1000m
     requests:
-      memory: 64Mi
+      memory: 1024Mi
       cpu: 100m
 
   env:
@@ -42,11 +42,11 @@ ingress:
     appgw.ingress.kubernetes.io/ssl-redirect: "true"
     kubernetes.io/ingress.class: "azure/application-gateway"
   hosts:
-    - host: "veille-git.fabrique.social.gouv.fr"
+    - host: "cdtn-veille-git.fabrique.social.gouv.fr"
       paths:
         - path: /
           servicePort: 3000
   tls:
     - hosts:
-        - "veille-git.fabrique.social.gouv.fr"
-      secretName: veille-git-crt
+        - "cdtn-veille-git.fabrique.social.gouv.fr"
+      secretName: cdtn-veille-git-crt
