@@ -1,5 +1,5 @@
 image:
-  repository: registry.gitlab.factory.social.gouv.fr/socialgouv/veille-git
+  repository: registry.gitlab.factory.social.gouv.fr/socialgouv/cdtn-veille-git
 
 labels:
   app.kubernetes.io/part-of: cdtn-veille-git
