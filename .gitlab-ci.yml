@@ -5,6 +5,7 @@ include:
 
 variables:
   PROJECT: "cdtn-veille-git"
+  KUBE_NAMESPACE: "cdtn-veille-git"
   RANCHER_PROJECT_ID: "c-kk8xm:p-8n8mv" # "default" project id here
   PORT: 3000
   VALUES_FILE: ./.k8s/app.values.yml # Your values
