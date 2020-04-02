@@ -5,7 +5,7 @@ include:
 
 variables:
   PROJECT: "cdtn-veille-git"
-  RANCHER_PROJECT_ID: "c-kk8xm:p-8n8mv" # "default" project id here
+  RANCHER_PROJECT_ID: "c-l9h59:p-6b2d4" # "default" project id here
   PORT: 3000
   VALUES_FILE: ./.k8s/app.values.yml # Your values
   DOCKER_BUILD_ARGS: "--no-cache"
