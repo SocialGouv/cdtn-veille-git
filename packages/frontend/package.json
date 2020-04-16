@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "next start",
-    "dev": "next dev",
+    "dev": "next dev --port 4000",
     "build": "next build",
     "lint": "eslint pages src"
   },
