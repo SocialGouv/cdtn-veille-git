@@ -12,7 +12,9 @@ const compareLegiArticles = (tree1, tree2) =>
     tree1,
     tree2,
     (art1, art2) =>
-      art1.data.texte !== art2.data.texte || art1.data.etat !== art2.data.etat
+      art1.data.texte !== art2.data.texte ||
+      art1.data.etat !== art2.data.etat ||
+      art1.data.nota !== art2.data.nota
   );
 
 // todo: ensure the diff is useful, exclude html/format changes

@@ -205,13 +205,39 @@ const DilaFileChangeDetail = ({
                   size={16}
                   style={{ marginRight: 5, verticalAlign: "middle" }}
                 />
-                Voir le diff
+                Voir les modifications sur l'article
               </div>
             }
           >
             <Diff
               inputA={previousContent}
               inputB={content}
+              type={"words"}
+              style={{
+                padding: 5,
+                whiteSpace: "pre-line",
+                border: "1px solid silver",
+                background: "#fff",
+                borderRadius: 3
+              }}
+            />
+          </Collapsible>
+        )}
+        {previous && previous.data.nota !== data.nota && (
+          <Collapsible
+            trigger={
+              <div style={{ cursor: "pointer" }}>
+                <Search
+                  size={16}
+                  style={{ marginRight: 5, verticalAlign: "middle" }}
+                />
+                Voir les modifications sur le "NOTA"
+              </div>
+            }
+          >
+            <Diff
+              inputA={previous.data.nota}
+              inputB={data.nota}
               type={"words"}
               style={{
                 padding: 5,
