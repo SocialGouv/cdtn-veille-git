@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "license": "MIT",
   "dependencies": {
-    "mkdirp": "^1.0.3",
-    "simple-git": "^1.131.0"
+    "mkdirp": "^1.0.4",
+    "simple-git": "^1.132.0"
   }
 }
