@@ -1,4 +1,4 @@
-# veille-git
+# cdtn-veille-git
 
 API + UI pour reporter les changements de contenus sur des repos GIT.
 
