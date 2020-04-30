@@ -3,5 +3,14 @@
     "github>SocialGouv/renovate-config",
     "group:allNonMajor",
     ":automergeAll"
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": ["Dockerfile$"],
+      "matchStrings": [
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sARG .*?_VERSION=(?<currentValue>.*)\\s"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
+    }
   ]
 }
