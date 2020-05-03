@@ -969,9 +969,9 @@
     eslint-plugin-prettier "~3.1.2"
 
 "@socialgouv/fiches-vdd@^1.26.0":
-  version "1.48.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.48.0.tgz#79b7cbedf61c61993d74791fc07ba738d6eb466c"
-  integrity sha512-RejuxYvk0gF+e7o1c4hRqE/j61wcOcorGXjKpUOPMI503Xo/ucuwDcAXjgbZ7nsh8Qw449l7Ma5e6HoAExcNow==
+  version "1.49.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.49.0.tgz#c4059d29d347c928daaa91ab5fd4a15808be3f87"
+  integrity sha512-mvW+LCvv8YSxPah6XRqVnrHEekSrgx36nrDfdky7ONbtfm5OIHMwgfKLG6HBNP/oMxuDBtzhzkPiUCws5Nkj9g==
   dependencies:
     node-fetch "^2.6.0"
     ora "^4.0.4"
