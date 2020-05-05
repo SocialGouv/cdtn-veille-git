@@ -12,7 +12,7 @@ const {
 } = process.env;
 
 const isProductionCluster = CI_ENVIRONMENT_NAME.endsWith("prod");
-console.log(isProductionCluster)
+
 const env: GlobalEnvironment = {
   namespaceName: KUBE_NAMESPACE,
   //
