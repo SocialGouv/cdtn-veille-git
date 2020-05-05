@@ -18,14 +18,16 @@ const env: GlobalEnvironment = {
   //
   domain: KUBE_INGRESS_BASE_DOMAIN,
   subdomainSeparator: isProductionCluster ? "." : "-",
-  subdomain: isProductionCluster ? CI_PROJECT_NAME : `${CI_ENVIRONMENT_SLUG}-${CI_PROJECT_NAME}`,
+  subdomain: isProductionCluster
+    ? CI_PROJECT_NAME
+    : `${CI_ENVIRONMENT_SLUG}-${CI_PROJECT_NAME}`,
   //
   annotations: {
     "app.gitlab.com/app": CI_PROJECT_PATH_SLUG,
     "app.gitlab.com/env": CI_ENVIRONMENT_SLUG,
-    application: CI_PROJECT_NAME,
   },
   labels: {
+    application: CI_PROJECT_NAME,
     owner: CI_PROJECT_NAME,
     team: CI_PROJECT_NAME,
   },

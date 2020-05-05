@@ -11,13 +11,14 @@ export interface GlobalEnvironment {
 }
 
 export type AppComponentEnvironment = {
-  containerPort: number,
+  containerPort: number;
   imageName: string;
   imageTag: string;
-  name?: string,
-  servicePort: number,
+  labels?: Record<string, string>;
+  name?: string;
+  servicePort: number;
   subdomain?: string;
-}
+};
 
 export type NamespaceComponentEnvironment = {
   annotations?: Record<string, string>;
