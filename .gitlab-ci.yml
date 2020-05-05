@@ -32,7 +32,14 @@ Deploy app (dev):
   extends:
     - .autodevops_deploy_app_dev
     - .deploy_app_stage
+  cache:
+    key:
+      files:
+        - .k8s/yarn.lock
+    paths:
+      - .k8s/node_modules
   script:
+    - yarn --silent --cwd .k8s --frozen-lockfile
     - yarn --silent --cwd .k8s
       kosko generate --env gitlab | kubectl apply -f -
 
