@@ -11,9 +11,6 @@ COPY packages/git/package.json /app/packages/git/package.json
 RUN yarn
 
 COPY packages /app/packages
-COPY .submodules /app/.submodules
-
-RUN yarn prerender
 
 ENTRYPOINT ["yarn", "workspace", "@veille/frontend", "start"]
 

@@ -11,11 +11,6 @@ variables:
   DOCKER_BUILD_ARGS: "--no-cache"
   GIT_SUBMODULE_STRATEGY: none
 
-Register image:
-  extends: .autodevops_register_image
-  variables:
-    GIT_SUBMODULE_STRATEGY: normal
-
 #
 
 
