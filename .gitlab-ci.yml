@@ -39,7 +39,7 @@ Deploy app (dev):
     paths:
       - .k8s/node_modules
   script:
-    - yarn --silent --cwd .k8s --frozen-lockfile
+    - yarn --cwd .k8s --frozen-lockfile
     - yarn --silent --cwd .k8s
       kosko generate --env gitlab | kubectl apply -f -
 
