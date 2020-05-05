@@ -8,9 +8,8 @@
 import { Namespace } from "kubernetes-models/v1/Namespace";
 import env from "@kosko/env";
 
-const globalParams = env.global();
 const params = env.component("namespace");
-const name = globalParams.namespaceName;
+const name = params.namespaceName;
 
 const labels = { app: name, ...params.labels };
 const metadata = { name, labels, annotations: params.annotations };
