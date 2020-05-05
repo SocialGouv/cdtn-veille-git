@@ -4,7 +4,7 @@ import memoizee from "memoizee";
 
 import { compareArticles } from "./compareArticles";
 
-const GIT_STORAGE = "/tmp/clones";
+const GIT_STORAGE = process.env.GIT_STORAGE || "../../.submodules";
 
 // todo: ensure the diff is useful, exclude html/format changes
 const compareLegiArticles = (tree1, tree2) =>
