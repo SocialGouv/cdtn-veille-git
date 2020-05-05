@@ -1,0 +1,12 @@
+[submodule "socialgouv/legi-data"]
+  branch = master
+  path = .submodules/socialgouv/legi-data
+  url = https://github.com/socialgouv/legi-data
+[submodule "socialgouv/fiches-vdd"]
+  branch = master
+  path = .submodules/socialgouv/fiches-vdd
+  url = https://github.com/socialgouv/fiches-vdd
+[submodule "socialgouv/kali-data"]
+  branch = master
+  path = .submodules/socialgouv/kali-data
+  url = https://github.com/socialgouv/kali-data
