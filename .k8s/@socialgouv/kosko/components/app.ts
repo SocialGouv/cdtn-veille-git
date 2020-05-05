@@ -42,6 +42,16 @@ const deployment = new Deployment({
                 containerPort: params.containerPort,
               },
             ],
+            resources: {
+              limits: {
+                cpu: "50m",
+                memory: "32Mi",
+              },
+              requests: {
+                cpu: "5m",
+                memory: "16Mi",
+              },
+            },
           },
         ],
       },
