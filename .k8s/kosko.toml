@@ -1,0 +1,11 @@
+# Global configs
+require = ["ts-node/register"]
+components = ["*"]
+
+#
+[paths.environment]
+global = "environments/#{environment}"
+component = "environments/#{environment}/#{component}"
+
+[environment.prod]
+components = ["!_namespace"]

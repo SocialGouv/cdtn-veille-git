@@ -15,3 +15,36 @@ Register image:
   extends: .autodevops_register_image
   variables:
     GIT_SUBMODULE_STRATEGY: normal
+
+#
+
+
+Create namespace:
+  only:
+    - never
+  script:
+    - exit ${CI_JOB_SKIP_EXIT_CODE:-0}
+
+#
+
+.deploy_app_stage:
+  stage: Deploy
+  image: registry.gitlab.factory.social.gouv.fr/socialgouv/docker/kosko:1.13.0
+  variables:
+    IMAGE_TAG: $CI_COMMIT_SHA
+
+Deploy app (dev):
+  extends:
+    - .autodevops_deploy_app_dev
+    - .deploy_app_stage
+  script:
+    - yarn --silent --cwd .k8s
+      kosko generate --env gitlab | kubectl apply -f -
+
+Deploy app (prod):
+  extends:
+    - .autodevops_deploy_app_prod
+    - .deploy_app_stage
+  script:
+    - cd .k8s
+    - kosko generate --env prod | kubectl apply -f -
