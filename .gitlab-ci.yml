@@ -41,6 +41,8 @@ Deploy app (dev):
   script:
     - yarn --cwd .k8s --frozen-lockfile
     - yarn --silent --cwd .k8s
+      kosko generate --env gitlab
+    - yarn --silent --cwd .k8s
       kosko generate --env gitlab | kubectl apply -f -
 
 Deploy app (prod):
