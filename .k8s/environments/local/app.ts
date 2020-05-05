@@ -1,4 +1,4 @@
-import { AppComponentEnvironment } from "@socialgouv/kosko/environments/local/app";
+import { AppComponentEnvironment } from "@socialgouv/kosko/types";
 
 const env: AppComponentEnvironment = {
   name: "veille",

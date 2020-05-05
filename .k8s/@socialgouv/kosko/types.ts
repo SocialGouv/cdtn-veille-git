@@ -16,7 +16,7 @@ export type AppComponentEnvironment = {
   imageTag: string;
   name?: string,
   servicePort: number,
-  subdomain: string;
+  subdomain?: string;
 }
 
 export type NamespaceComponentEnvironment = {

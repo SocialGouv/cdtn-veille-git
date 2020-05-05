@@ -1,9 +1,9 @@
-import { AppComponentEnvironment } from "@socialgouv/kosko/environments/gitlab/app";
+import { default as config } from "@socialgouv/kosko/environments/gitlab/app";
+import { AppComponentEnvironment } from "@socialgouv/kosko/types";
 
 const env: AppComponentEnvironment = {
-  imageName:
-    "registry.gitlab.factory.social.gouv.fr/socialgouv/cdtn-veille-git",
-  imageTag: "fe2edf06bd1b97fa5977e1ace19833fe306e1cd9",
+  ...config,
+  name: "veille",
   containerPort: 3000,
   servicePort: 3000,
 };

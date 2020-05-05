@@ -1,7 +1,6 @@
-export type AppComponentEnvironment = {
-  containerPort: number,
-  imageName: string;
-  imageTag: string;
-  servicePort: number,
-  subdomain?: string;
-}
+import { AppComponentEnvironment } from "../../types";
+
+export default {
+  imageTag: process.env.CI_COMMIT_SHA,
+  imageName: process.env.CI_REGISTRY_IMAGE,
+} as Readonly<AppComponentEnvironment>;
