@@ -15,7 +15,9 @@ export type AppComponentEnvironment = {
   imageName: string;
   imageTag: string;
   labels?: Record<string, string>;
+  limits?: {cpu: string, memory: string};
   name?: string;
+  requests?: {cpu: string, memory: string};
   servicePort: number;
   subdomain?: string;
 };

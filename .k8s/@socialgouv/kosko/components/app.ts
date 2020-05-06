@@ -46,10 +46,12 @@ const deployment = new Deployment({
               limits: {
                 cpu: "50m",
                 memory: "32Mi",
+                ...params.limits,
               },
               requests: {
                 cpu: "5m",
                 memory: "16Mi",
+                ...params.requests,
               },
             },
           },
