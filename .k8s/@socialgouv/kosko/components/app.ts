@@ -30,7 +30,7 @@ const deployment = new Deployment({
     },
     template: {
       metadata: {
-        labels,
+        labels: metadata.labels,
       },
       spec: {
         containers: [
