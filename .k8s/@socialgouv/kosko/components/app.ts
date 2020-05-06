@@ -8,25 +8,25 @@ import env from "@kosko/env";
 const params = env.component("app");
 const name = params.name || "app";
 
-const labels = { app: name };
-const metadata = {
+export const matchLabels = { app: name };
+export const metadata = {
   name: name,
-  labels: { ...labels, ...params.labels },
+  labels: { ...matchLabels, ...params.labels },
   namespace: params.namespaceName,
 };
 
 //
 
-const host = `${params.subdomain}.${params.domain}`;
+export const host = `${params.subdomain}.${params.domain}`;
 
 //
 
-const deployment = new Deployment({
+export const deployment = new Deployment({
   metadata,
   spec: {
     replicas: 1,
     selector: {
-      matchLabels: labels,
+      matchLabels,
     },
     template: {
       metadata: {
@@ -61,7 +61,7 @@ const deployment = new Deployment({
   },
 });
 
-const ingress = new Ingress({
+export const ingress = new Ingress({
   metadata: {
     ...metadata,
     annotations: {
@@ -95,10 +95,10 @@ const ingress = new Ingress({
   },
 });
 
-const service = new Service({
+export const service = new Service({
   metadata,
   spec: {
-    selector: labels,
+    selector: matchLabels,
     type: "ClusterIP",
     ports: [
       {
