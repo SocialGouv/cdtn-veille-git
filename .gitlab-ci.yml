@@ -5,7 +5,48 @@ include:
 
 variables:
   PROJECT: "cdtn-veille-git"
-  RANCHER_PROJECT_ID: "c-l9h59:p-6b2d4" # "default" project id here
   PORT: 3000
   VALUES_FILE: ./.k8s/app.values.yml # Your values
-  DOCKER_BUILD_ARGS: "--no-cache"
+  GIT_SUBMODULE_STRATEGY: none
+
+#
+
+
+Create namespace:
+  only:
+    - never
+  script:
+    - exit ${CI_JOB_SKIP_EXIT_CODE:-0}
+
+#
+
+.deploy_app_stage:
+  stage: Deploy
+  image: registry.gitlab.factory.social.gouv.fr/socialgouv/docker/kosko:1.13.0
+  variables:
+    IMAGE_TAG: $CI_COMMIT_SHA
+
+Deploy app (dev):
+  extends:
+    - .autodevops_deploy_app_dev
+    - .deploy_app_stage
+  cache:
+    key:
+      files:
+        - .k8s/yarn.lock
+    paths:
+      - .k8s/node_modules
+  script:
+    - yarn --cwd .k8s --frozen-lockfile
+    - yarn --silent --cwd .k8s
+      kosko generate --env gitlab
+    - yarn --silent --cwd .k8s
+      kosko generate --env gitlab | kubectl apply -f -
+
+Deploy app (prod):
+  extends:
+    - .autodevops_deploy_app_prod
+    - .deploy_app_stage
+  script:
+    - cd .k8s
+    - kosko generate --env prod | kubectl apply -f -
