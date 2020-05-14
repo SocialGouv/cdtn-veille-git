@@ -9,9 +9,3 @@ variables:
   PORT: 3000
   VALUES_FILE: ./.k8s/app.values.yml # Your values
   DOCKER_BUILD_ARGS: "--no-cache"
-  GIT_SUBMODULE_STRATEGY: none
-
-Register image:
-  extends: .autodevops_register_image
-  variables:
-    GIT_SUBMODULE_STRATEGY: normal
