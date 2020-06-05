@@ -2422,10 +2422,10 @@ des.js@^1.0.0:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
 
-diff@1.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/diff/-/diff-1.2.2.tgz#27f936a1f5831581024e9ac78fbda7330ce79e85"
-  integrity sha1-J/k2ofWDFYECTprHj72nMwznnoU=
+diff@4.0:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
+  integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
 
 diffie-hellman@^5.0.0:
   version "5.0.3"
