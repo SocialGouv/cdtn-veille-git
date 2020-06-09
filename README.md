@@ -31,4 +31,3 @@ Actuellement les repos GIT sont récupérés via le `Dockerfile`, donc mis à jo
 - continuous deployment with @renovate + @socialgouv
 - remplacer simple-git par un binding natif
 - maybe some persistent redis/memcache
-- 
