@@ -1,3 +1,6 @@
 {
-  "extends": ["github>SocialGouv/renovate-config:light"]
+  "extends": [
+    "github>SocialGouv/renovate-config:light",
+    "github>SocialGouv/renovate-config:socialgouv-data"
+  ]
 }
