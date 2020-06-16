@@ -1029,10 +1029,10 @@
     eslint-plugin-jest "~23.8.2"
     eslint-plugin-prettier "~3.1.2"
 
-"@socialgouv/fiches-vdd@^1.95.0":
-  version "1.95.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.95.0.tgz#880ef4468218e46c468d44ab5f4d9a8d6f4d4539"
-  integrity sha512-tWV4vvWHS4OFuw7SxuwDl7RtYWspMso4pJXJkgYNV/xN4aAh8K6sYPk1Jjj3SjhSu+Ql0ITDcOc6zm35xMA3nw==
+"@socialgouv/fiches-vdd@^1.96.0":
+  version "1.96.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.96.0.tgz#a210d5aa07c220bfc9f277e28016da5ff8916236"
+  integrity sha512-SjBt0fkN0bl0niHuaZ440e7Gp+djmZxLpXeSFYJuQpJ7IR3CYGyr6hzBFwvktg5Hir5YPCAbfqsU2r7o8JJj8w==
   dependencies:
     node-fetch "^2.6.0"
     ora "^4.0.4"
@@ -1052,10 +1052,10 @@
     unist-util-map "^2.0.1"
     unist-util-remove "^2.0.0"
 
-"@socialgouv/legi-data@^1.14.0":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/legi-data/-/legi-data-1.14.0.tgz#9d4418f07154412b098b0963438faec3f7cbfc0a"
-  integrity sha512-eCfJQ29/ZnVNF6xHZ26QmY4RRpRr5tWgZPc2NNlQEbU2VrqPMLLqYpjMIux5vNVlWUoCJOGZr98PbmhscDTuIQ==
+"@socialgouv/legi-data@^1.15.0":
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/legi-data/-/legi-data-1.15.0.tgz#ffff026c8e69f57e2135b889418b4bdfb149ed9f"
+  integrity sha512-xVsDIaWwAi1nwGvOqiFxpOxK4fKjyS17E1gQSg/lK/b6S4HYgvOFXDFQ2p+O5eOvanU/DGNgCVZvUwv3SAFjUw==
   dependencies:
     "@socialgouv/dila-api-client" "^1.1.1"
     debug "^4.1.1"
