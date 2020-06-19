@@ -39,7 +39,8 @@ const excludes = [
   "7fc71c232753c82818fe7872c239ac42057dcf8e",
   "ace283ca136f0d93861083f971921bd5376e6b46", // kali-data reordering
   "f6bf66aac1fa2dfb39e0ac6994776151d14c3851", // kali-data reordering
-  "395bd8ad1baa514d0bebb80c51593da984f859ae" // kali-data reordering
+  "395bd8ad1baa514d0bebb80c51593da984f859ae", // kali-data reordering
+  "1cf4cb6d4ee424063235353a6212b0212c2133bb", // kali-data reordering
 ];
 
 const isExcluded = commit => excludes.includes(commit.hash);
