@@ -960,29 +960,29 @@
     eslint-plugin-jest "~23.8.2"
     eslint-plugin-prettier "~3.1.2"
 
-"@socialgouv/fiches-vdd@^1.103.0":
-  version "1.103.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.103.0.tgz#8cc9da50c036fe29fe81c94001b7f8c5c0a05d82"
-  integrity sha512-H6qWppQ37r6ZdEyK9XBFC2/achAy+9l15pLZ1z3tvt2AWFpchrdLC8uEfew13ycMYuoQyoEbSKOgIvswLoWyqA==
+"@socialgouv/fiches-vdd@^1.131.0":
+  version "1.131.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.131.0.tgz#72128e4bf9ae2625d75c8cef6934bd18367322bd"
+  integrity sha512-byACNWLktnn7hyEQazeaecRvWkbaTIGOtwzVAPP9HDU4jHNFYEXsx+l1Ub1KOW05P1EJGT4jnZ+ejOKo76ot2g==
   dependencies:
     node-fetch "^2.6.0"
-    ora "^4.0.4"
+    ora "^4.0.5"
     unzipper "^0.10.11"
     xml-js "^1.6.11"
 
-"@socialgouv/kali-data@^1.73.0":
-  version "1.73.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/kali-data/-/kali-data-1.73.0.tgz#e0be3bedf057b3b174ddd4ecf20d76d46125d0bf"
-  integrity sha512-U6DFgnn2vvBjd7Y1IdFWEOw7SmfhFLy++Rq3uwU+XEVjTSLIiXpYFgWvO4ag608ZskpMTw21o23/jrN4gbgMcg==
+"@socialgouv/kali-data@^1.79.0":
+  version "1.79.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/kali-data/-/kali-data-1.79.0.tgz#d786220bceac50a83123cb937cf60011e36c7bd4"
+  integrity sha512-JxXvTcREmlpBHA79FvEaHV8WTZ9YrWWbLKv34lt8CoLcZSMx/DzitD4p13rpB8vyP6yv7ASAaNuyzVqGSAkwFA==
   dependencies:
     unist-util-find "1.0.1"
     unist-util-flat-filter "1.0.0"
     unist-util-parents "1.0.3"
 
-"@socialgouv/legi-data@^1.18.0":
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/legi-data/-/legi-data-1.18.0.tgz#66503247606e056e64637dfebffa6c2d36cb617e"
-  integrity sha512-sc6LyPE7RwkGdLkDmtOJm6zhBzeJsTd75tHdlDyGDR2a5s4UYwXFoVxC6kS3C2yB0dWX2DAW11ysdF5TkHRm2A==
+"@socialgouv/legi-data@^1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/legi-data/-/legi-data-1.23.0.tgz#b0f82f4e1ca63882838f9bb940220e6b7b5d942b"
+  integrity sha512-sqHp+3XKzM5uoc5BXW6t5sIuwz+RRHWG7apRAVEbnOiSNMMAdAa4TDUvGQE/TtJG9cluLa0168Sloo9nT9nyog==
   dependencies:
     unist-util-find "1.0.1"
     unist-util-parents "1.0.3"
@@ -4654,10 +4654,10 @@ optionator@^0.9.1:
     type-check "^0.4.0"
     word-wrap "^1.2.3"
 
-ora@^4.0.4:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/ora/-/ora-4.0.4.tgz#e8da697cc5b6a47266655bf68e0fb588d29a545d"
-  integrity sha512-77iGeVU1cIdRhgFzCK8aw1fbtT1B/iZAvWjS+l/o1x0RShMgxHUZaD2yDpWsNCPwXg9z1ZA78Kbdvr8kBmG/Ww==
+ora@^4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/ora/-/ora-4.0.5.tgz#7410b5cc2d99fa637fd5099bbb9f02bfbb5a361e"
+  integrity sha512-jCDgm9DqvRcNIAEv2wZPrh7E5PcQiDUnbnWbAfu4NGAE2ZNqPFbDixmWldy1YG2QfLeQhuiu6/h5VRrk6cG50w==
   dependencies:
     chalk "^3.0.0"
     cli-cursor "^3.1.0"
