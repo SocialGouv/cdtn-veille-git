@@ -960,29 +960,29 @@
     eslint-plugin-jest "~23.8.2"
     eslint-plugin-prettier "~3.1.2"
 
-"@socialgouv/fiches-vdd@^1.142.0":
-  version "1.142.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.142.0.tgz#a7fba27c1b95b3b8b0ce499483dbe5f8d6a9c731"
-  integrity sha512-R5kNegplW64Mw8TziZfIYnwV+RGJyOt1HYcGWJyVozlzJ4vzFJP+KIQhV8pfwk5YoXJgmY3/A9TlN/DdYFFYzw==
+"@socialgouv/fiches-vdd@^1.144.0":
+  version "1.144.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.144.0.tgz#c984e0f998b941fd523332c6d563929960566ef8"
+  integrity sha512-O2l0sLJIndy21DaAVksegLAypdOcnHnXU9OHX7UWpq7MliG4ccOK6VPbPQt6d7y+jDtNnYMCs5pqs5KimOAG+w==
   dependencies:
     node-fetch "^2.6.0"
     ora "^4.0.5"
     unzipper "^0.10.11"
     xml-js "^1.6.11"
 
-"@socialgouv/kali-data@^1.86.0":
-  version "1.86.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/kali-data/-/kali-data-1.86.0.tgz#98863d5c1b9a13308cb371b6d28084c8ff4e7e8b"
-  integrity sha512-RxqvIuJAgTbnBiodWfSS34/yJXaWKGDQyaLQGE7Uc6s7HiuinhCnquKRSv9rALPHfyM4R8RWMAxHPCf9ZS72fw==
+"@socialgouv/kali-data@^1.88.0":
+  version "1.88.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/kali-data/-/kali-data-1.88.0.tgz#60356b3e9b11e96c0d1cb41770067e6499fde5f8"
+  integrity sha512-jeYTyEHUB+IhF2SRjhp4VXeKcUn28zjtF1BNJBdbOlW0NXXq0FI8oWOFnZpS8b9jzlKa8ZDbk+ip5E46RgPZPA==
   dependencies:
     unist-util-find "1.0.1"
     unist-util-flat-filter "1.0.0"
     unist-util-parents "1.0.3"
 
-"@socialgouv/legi-data@^1.24.0":
-  version "1.24.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/legi-data/-/legi-data-1.24.0.tgz#3235e4c4753629e7300cf0d4c7cfd4287c55f708"
-  integrity sha512-XOgGKxQs92Qrij2VsoBu0vrSB+UXdDj2sBnoSD4h1P0MJ9WAiWfOlp08ploL0ZI6IR2qbUJDluLKoNglndSZLg==
+"@socialgouv/legi-data@^1.25.0":
+  version "1.25.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/legi-data/-/legi-data-1.25.0.tgz#3540e68d20f7697ce86e1a5fb69830d5b1df778b"
+  integrity sha512-wm8+5UaDEUGv+6/2jI6hga2g+rjwOEXhER/xKUvXa9GHbHuPCaLP79mpsOLhDRe2k3EaSgYONzFdWvXFkMz5HA==
   dependencies:
     unist-util-find "1.0.1"
     unist-util-parents "1.0.3"
