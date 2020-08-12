@@ -960,20 +960,20 @@
     eslint-plugin-jest "~23.8.2"
     eslint-plugin-prettier "~3.1.2"
 
-"@socialgouv/fiches-vdd@^1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.144.0.tgz#c984e0f998b941fd523332c6d563929960566ef8"
-  integrity sha512-O2l0sLJIndy21DaAVksegLAypdOcnHnXU9OHX7UWpq7MliG4ccOK6VPbPQt6d7y+jDtNnYMCs5pqs5KimOAG+w==
+"@socialgouv/fiches-vdd@^1.147.0":
+  version "1.147.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.147.0.tgz#3faca2cdbd45b4addb7c1754f257098a5a064e68"
+  integrity sha512-dxxABCbz+gV8wPKXDMV+aF+x3s2wZcjsvsTn7zMeIVAuTpYAX+9PmCZZ0VezEL8/3P8OrSmqXko0cf7+hFXBcA==
   dependencies:
     node-fetch "^2.6.0"
-    ora "^4.0.5"
+    ora "^5.0.0"
     unzipper "^0.10.11"
     xml-js "^1.6.11"
 
-"@socialgouv/kali-data@^1.88.0":
-  version "1.88.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/kali-data/-/kali-data-1.88.0.tgz#60356b3e9b11e96c0d1cb41770067e6499fde5f8"
-  integrity sha512-jeYTyEHUB+IhF2SRjhp4VXeKcUn28zjtF1BNJBdbOlW0NXXq0FI8oWOFnZpS8b9jzlKa8ZDbk+ip5E46RgPZPA==
+"@socialgouv/kali-data@^1.90.0":
+  version "1.90.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/kali-data/-/kali-data-1.90.0.tgz#d0c1d9068c52f49a6c38fcf5976c22f83b477769"
+  integrity sha512-wpCmB2EHyzh+9PxjnIF+K50mV5BksBtp0vhPGYrvIzmVdSXfG/VLD1eeBOYKfS5NCfBpL4fvi/nS5JBdtuCqFA==
   dependencies:
     unist-util-find "1.0.1"
     unist-util-flat-filter "1.0.0"
@@ -1819,10 +1819,10 @@ chalk@^3.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chalk@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.0.0.tgz#6e98081ed2d17faab615eb52ac66ec1fe6209e72"
-  integrity sha512-N9oWFcegS0sFr9oh1oz2d7Npos6vNoWW9HvtCg5N1KRFpUhaAhvTv5Y58g880fZaEYSNm3qDz8SU1UrGvp+n7A==
+chalk@^4.0.0, chalk@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.0.tgz#4e14870a618d9e2edd97dd8345fd9d9dc315646a"
+  integrity sha512-qwx12AxXe2Q5xQ43Ac//I6v5aXTipYrSESdOgzrN+9XjgEpyjpKuvSGaN4qE93f7TQTlerQQ8S+EQ0EyDoVL1A==
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
@@ -1928,10 +1928,10 @@ cli-cursor@^3.1.0:
   dependencies:
     restore-cursor "^3.1.0"
 
-cli-spinners@^2.2.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.3.0.tgz#0632239a4b5aa4c958610142c34bb7a651fc8df5"
-  integrity sha512-Xs2Hf2nzrvJMFKimOR7YR0QwZ8fc0u98kdtwN1eNAZzNQgH3vK2pXzff6GJtKh7S5hoJ87ECiAiZFS2fb5Ii2w==
+cli-spinners@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.4.0.tgz#c6256db216b878cfba4720e719cec7cf72685d7f"
+  integrity sha512-sJAofoarcm76ZGpuooaO0eDy8saEy+YoZBLjC4h8srt4jeBnkYeOgqxgsJQTpyt2LjI5PTfLJHSL+41Yu4fEJA==
 
 cli-width@^2.0.0:
   version "2.2.1"
@@ -4065,12 +4065,12 @@ lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
 
-log-symbols@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/log-symbols/-/log-symbols-3.0.0.tgz#f3a08516a5dea893336a7dee14d18a1cfdab77c4"
-  integrity sha512-dSkNGuI7iG3mfvDzUuYZyvk5dD9ocYCYzNU6CYDE6+Xqd+gwme6Z00NS3dUh8mq/73HaEtT7m6W+yUPtU6BZnQ==
+log-symbols@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/log-symbols/-/log-symbols-4.0.0.tgz#69b3cc46d20f448eccdb75ea1fa733d9e821c920"
+  integrity sha512-FN8JBzLx6CzeMrB0tg6pqlGU1wCrXW+ZXGH481kfsBqer0hToTIiHdjH4Mq8xJUbvATujKCvaREGWpGUionraA==
   dependencies:
-    chalk "^2.4.2"
+    chalk "^4.0.0"
 
 longest-streak@^1.0.0:
   version "1.0.0"
@@ -4654,16 +4654,16 @@ optionator@^0.9.1:
     type-check "^0.4.0"
     word-wrap "^1.2.3"
 
-ora@^4.0.5:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/ora/-/ora-4.0.5.tgz#7410b5cc2d99fa637fd5099bbb9f02bfbb5a361e"
-  integrity sha512-jCDgm9DqvRcNIAEv2wZPrh7E5PcQiDUnbnWbAfu4NGAE2ZNqPFbDixmWldy1YG2QfLeQhuiu6/h5VRrk6cG50w==
+ora@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/ora/-/ora-5.0.0.tgz#4f0b34f2994877b49b452a707245ab1e9f6afccb"
+  integrity sha512-s26qdWqke2kjN/wC4dy+IQPBIMWBJlSU/0JZhk30ZDBLelW25rv66yutUWARMigpGPzcXHb+Nac5pNhN/WsARw==
   dependencies:
-    chalk "^3.0.0"
+    chalk "^4.1.0"
     cli-cursor "^3.1.0"
-    cli-spinners "^2.2.0"
+    cli-spinners "^2.4.0"
     is-interactive "^1.0.0"
-    log-symbols "^3.0.0"
+    log-symbols "^4.0.0"
     mute-stream "0.0.8"
     strip-ansi "^6.0.0"
     wcwidth "^1.0.1"
