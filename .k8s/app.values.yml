@@ -29,8 +29,49 @@ deployment:
       cpu: 100m
 
   env:
+    - name: GIT_STORAGE
+      value: "/tmp/clones"
     - name: NODE_ENV
       value: "production"
+
+  initContainers:
+    - name: clone-socialgouv-fiches-vdd
+      image: alpine/git
+      args:
+        - clone
+        - --single-branch
+        - --
+        - https://github.com/socialgouv/fiches-vdd
+        - /tmp/clones/socialgouv/fiches-vdd
+      volumeMounts:
+        - name: submodules
+          mountPath: /tmp/clones/socialgouv/fiches-vdd
+    - name: clone-socialgouv-kali-data
+      image: alpine/git
+      args:
+        - clone
+        - --single-branch
+        - --
+        - https://github.com/socialgouv/kali-data
+        - /tmp/clones/socialgouv/kali-data
+      volumeMounts:
+        - name: submodules
+          mountPath: /tmp/clones/socialgouv/kali-data
+    - name: clone-socialgouv-legi-data
+      image: alpine/git
+      args:
+        - clone
+        - --single-branch
+        - --
+        - https://github.com/socialgouv/legi-data
+        - /tmp/clones/socialgouv/legi-data
+      volumeMounts:
+        - name: submodules
+          mountPath: /tmp/clones/socialgouv/legi-data
+
+  volumes:
+    - name: submodules
+      emptyDir: {}
 
 service:
   port: 3000
