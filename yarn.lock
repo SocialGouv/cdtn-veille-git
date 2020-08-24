@@ -970,19 +970,19 @@
     unzipper "^0.10.11"
     xml-js "^1.6.11"
 
-"@socialgouv/kali-data@^1.90.0":
-  version "1.90.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/kali-data/-/kali-data-1.90.0.tgz#d0c1d9068c52f49a6c38fcf5976c22f83b477769"
-  integrity sha512-wpCmB2EHyzh+9PxjnIF+K50mV5BksBtp0vhPGYrvIzmVdSXfG/VLD1eeBOYKfS5NCfBpL4fvi/nS5JBdtuCqFA==
+"@socialgouv/kali-data@^1.95.0":
+  version "1.95.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/kali-data/-/kali-data-1.95.0.tgz#bfd0f576aaaf3e4259b65e4d083fc924b71ba9d2"
+  integrity sha512-YQU3PWIf+9UsfmTHEIgL/Bd+mYB+eMKuqcDE4wp8IJTtb50FzcVqZmw6n3P8rtNKPQB78VJXWQ99Xsmc2v0HsQ==
   dependencies:
     unist-util-find "1.0.1"
     unist-util-flat-filter "1.0.0"
     unist-util-parents "1.0.3"
 
-"@socialgouv/legi-data@^1.25.0":
-  version "1.25.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/legi-data/-/legi-data-1.25.0.tgz#3540e68d20f7697ce86e1a5fb69830d5b1df778b"
-  integrity sha512-wm8+5UaDEUGv+6/2jI6hga2g+rjwOEXhER/xKUvXa9GHbHuPCaLP79mpsOLhDRe2k3EaSgYONzFdWvXFkMz5HA==
+"@socialgouv/legi-data@^1.28.0":
+  version "1.28.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/legi-data/-/legi-data-1.28.0.tgz#253497b4e51ca6dc24f0e4ad4574443bcde21fe8"
+  integrity sha512-AIIl445ZhPdIdW8buUx7SeOOR85XkmbpomokftGW+PltsjVdBBEW/fmJJjpgvIFYKPaowSgk/nCLBSvEKMV9mg==
   dependencies:
     unist-util-find "1.0.1"
     unist-util-parents "1.0.3"

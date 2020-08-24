@@ -41,8 +41,8 @@
   "devDependencies": {
     "@socialgouv/eslint-config-react": "0.20.0",
     "@socialgouv/eslint-config-recommended": "0.20.0",
-    "@socialgouv/kali-data": "^1.90.0",
-    "@socialgouv/legi-data": "^1.25.0",
+    "@socialgouv/kali-data": "^1.95.0",
+    "@socialgouv/legi-data": "^1.28.0",
     "eslint": "7.1.0",
     "prettier": "2.0.5"
   }
