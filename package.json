@@ -10,7 +10,8 @@
     "build": "exit 0",
     "prerender": "NODE_OPTIONS=\"--max-old-space-size=8192\" yarn workspace @veille/frontend build",
     "dev": "NODE_OPTIONS=\"--max-old-space-size=8192\" yarn workspace @veille/frontend dev",
-    "start": "NODE_OPTIONS=\"--max-old-space-size=8192\" yarn workspace @veille/frontend start"
+    "start": "NODE_OPTIONS=\"--max-old-space-size=8192\" yarn workspace @veille/frontend start",
+    "k8s": "yarn --silent --cwd .k8s"
   },
   "workspaces": [
     "packages/*"

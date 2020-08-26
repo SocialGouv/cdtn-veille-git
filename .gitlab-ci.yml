@@ -1,11 +1,16 @@
 include:
   - project: SocialGouv/gitlab-ci-yml
-    file: /autodevops_simple_app.yml
-    ref: v16.0.1
+    file: /autodevops.yml
+    ref: v17.3.0
 
 variables:
-  PROJECT: "cdtn-veille-git"
-  RANCHER_PROJECT_ID: "c-l9h59:p-6b2d4" # "default" project id here
-  PORT: 3000
-  VALUES_FILE: ./.k8s/app.values.yml # Your values
-  DOCKER_BUILD_ARGS: "--no-cache"
+  AUTO_DEVOPS_RELEASE_AUTO: "🔖"
+  AUTO_DEVOPS_PRODUCTION_AUTO: "🚀"
+
+# NOTE(julienbouquillon): use custom register job
+# By default, kosko-charts use a "/app" for default docker images names
+# TODO: discuss
+Register image:
+  extends: .autodevops_register_image
+  variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/app
