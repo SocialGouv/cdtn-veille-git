@@ -5,7 +5,7 @@ include:
 
 variables:
   AUTO_DEVOPS_RELEASE_AUTO: "🔖"
-  AUTO_DEVOPS_PRODUCTION_AUTO: "🚀"
+  #AUTO_DEVOPS_PRODUCTION_AUTO: "🚀"
 
 # NOTE(julienbouquillon): use custom register job
 # By default, kosko-charts use a "/app" for default docker images names
