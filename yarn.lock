@@ -970,10 +970,10 @@
     unzipper "^0.10.11"
     xml-js "^1.6.11"
 
-"@socialgouv/kali-data@^1.95.0":
-  version "1.95.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/kali-data/-/kali-data-1.95.0.tgz#bfd0f576aaaf3e4259b65e4d083fc924b71ba9d2"
-  integrity sha512-YQU3PWIf+9UsfmTHEIgL/Bd+mYB+eMKuqcDE4wp8IJTtb50FzcVqZmw6n3P8rtNKPQB78VJXWQ99Xsmc2v0HsQ==
+"@socialgouv/kali-data@^1.106.0":
+  version "1.128.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/kali-data/-/kali-data-1.128.0.tgz#20089078b4331c3b36147125942e9f76a9ad79f5"
+  integrity sha512-+X5HF3Q77HL10x6YmTZxxQDvre1lEKi5d+8E/Aeu2EctzlQpfsGVpcpPm8mwaiLAPV6fPKatAiblZ3rLFlufxA==
   dependencies:
     unist-util-find "1.0.1"
     unist-util-flat-filter "1.0.0"
@@ -5500,14 +5500,13 @@ react-transition-group@^2.3.1:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react@^16.13.1:
-  version "16.13.1"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
-  integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
+react@^17.0.1:
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-17.0.1.tgz#6e0600416bd57574e3f86d92edba3d9008726127"
+  integrity sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-    prop-types "^15.6.2"
 
 reactstrap@^8.4.1:
   version "8.4.1"
