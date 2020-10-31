@@ -14,7 +14,7 @@
     "promise-serial-exec": "^1.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react-dom": "^17.0.1",
     "react-feather": "^2.0.8",
     "reactstrap": "^8.4.1",
     "unist-util-parents": "^1.0.3",
