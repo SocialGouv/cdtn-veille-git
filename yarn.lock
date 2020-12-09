@@ -960,29 +960,29 @@
     eslint-plugin-jest "~23.8.2"
     eslint-plugin-prettier "~3.1.2"
 
-"@socialgouv/fiches-vdd@^1.147.0":
-  version "1.147.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.147.0.tgz#3faca2cdbd45b4addb7c1754f257098a5a064e68"
-  integrity sha512-dxxABCbz+gV8wPKXDMV+aF+x3s2wZcjsvsTn7zMeIVAuTpYAX+9PmCZZ0VezEL8/3P8OrSmqXko0cf7+hFXBcA==
+"@socialgouv/fiches-vdd@^1.199.0":
+  version "1.199.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/fiches-vdd/-/fiches-vdd-1.199.0.tgz#31302b1689ac598d081d09c2a0731720a31543c1"
+  integrity sha512-2ZVdqg08KP/2s769Vh4O7tns2GkM75SsUpH2XKH9UjsFQCArp1ExWf1z3NcTvOWMbV2369XCTMQ1JmilH/zGYA==
   dependencies:
-    node-fetch "^2.6.0"
-    ora "^5.0.0"
+    node-fetch "^2.6.1"
+    ora "^5.1.0"
     unzipper "^0.10.11"
     xml-js "^1.6.11"
 
-"@socialgouv/kali-data@^1.95.0":
-  version "1.95.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/kali-data/-/kali-data-1.95.0.tgz#bfd0f576aaaf3e4259b65e4d083fc924b71ba9d2"
-  integrity sha512-YQU3PWIf+9UsfmTHEIgL/Bd+mYB+eMKuqcDE4wp8IJTtb50FzcVqZmw6n3P8rtNKPQB78VJXWQ99Xsmc2v0HsQ==
+"@socialgouv/kali-data@^1.131.0":
+  version "1.131.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/kali-data/-/kali-data-1.131.0.tgz#fb57ce386ca0392a45d67bd3b28460591bf7ba82"
+  integrity sha512-78k/0wkqWF/5dbdxaWsm8838oX8J+OIChtYmMG5RgRUs9Hb7gJyql9Ni0fKi1DCS7COQbSBquL5W6oHijKEgug==
   dependencies:
     unist-util-find "1.0.1"
     unist-util-flat-filter "1.0.0"
     unist-util-parents "1.0.3"
 
-"@socialgouv/legi-data@^1.28.0":
-  version "1.28.0"
-  resolved "https://registry.yarnpkg.com/@socialgouv/legi-data/-/legi-data-1.28.0.tgz#253497b4e51ca6dc24f0e4ad4574443bcde21fe8"
-  integrity sha512-AIIl445ZhPdIdW8buUx7SeOOR85XkmbpomokftGW+PltsjVdBBEW/fmJJjpgvIFYKPaowSgk/nCLBSvEKMV9mg==
+"@socialgouv/legi-data@^1.46.0":
+  version "1.46.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/legi-data/-/legi-data-1.46.0.tgz#50d82ac9440349ec3bfd8096240223111be778a4"
+  integrity sha512-3roPe+ufiasGjo/SxuSCkD/CuQlgTB2UHkmseokwNEc5VaDEe8Q+9YSBjADo9Poz+kk4yNpRWY1YLZQrur8AcQ==
   dependencies:
     unist-util-find "1.0.1"
     unist-util-parents "1.0.3"
@@ -4429,10 +4429,15 @@ next@9.3.6:
     webpack "4.43.0"
     webpack-sources "1.4.3"
 
-node-fetch@2.6.0, node-fetch@^2.2.0, node-fetch@^2.6.0:
+node-fetch@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
   integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
+
+node-fetch@^2.2.0, node-fetch@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-libs-browser@^2.2.1:
   version "2.2.1"
@@ -4654,10 +4659,10 @@ optionator@^0.9.1:
     type-check "^0.4.0"
     word-wrap "^1.2.3"
 
-ora@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/ora/-/ora-5.0.0.tgz#4f0b34f2994877b49b452a707245ab1e9f6afccb"
-  integrity sha512-s26qdWqke2kjN/wC4dy+IQPBIMWBJlSU/0JZhk30ZDBLelW25rv66yutUWARMigpGPzcXHb+Nac5pNhN/WsARw==
+ora@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/ora/-/ora-5.1.0.tgz#b188cf8cd2d4d9b13fd25383bc3e5cba352c94f8"
+  integrity sha512-9tXIMPvjZ7hPTbk8DFq1f7Kow/HU/pQYB60JbNq+QnGwcyhWVZaQ4hM9zQDEsPxw/muLpgiHSaumUZxCAmod/w==
   dependencies:
     chalk "^4.1.0"
     cli-cursor "^3.1.0"
