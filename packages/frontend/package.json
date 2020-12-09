@@ -8,15 +8,15 @@
     "classnames": "^2.2.6",
     "diff": "1.2",
     "html-text": "^1.0.1",
-    "isomorphic-unfetch": "^3.0.0",
+    "isomorphic-unfetch": "^3.1.0",
     "memoizee": "^0.4.14",
-    "next": "9.3.6",
+    "next": "9.5.5",
     "promise-serial-exec": "^1.0.0",
     "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-feather": "^2.0.8",
-    "reactstrap": "^8.4.1",
+    "reactstrap": "^8.7.1",
     "unist-util-parents": "^1.0.3",
     "unist-util-select": "^3.0.1"
   },
@@ -39,11 +39,11 @@
     }
   },
   "devDependencies": {
-    "@socialgouv/eslint-config-react": "0.20.0",
-    "@socialgouv/eslint-config-recommended": "0.20.0",
+    "@socialgouv/eslint-config-react": "0.35.0",
+    "@socialgouv/eslint-config-recommended": "0.35.0",
     "@socialgouv/kali-data": "^1.131.0",
     "@socialgouv/legi-data": "^1.46.0",
-    "eslint": "7.1.0",
-    "prettier": "2.0.5"
+    "eslint": "7.15.0",
+    "prettier": "2.2.1"
   }
 }
