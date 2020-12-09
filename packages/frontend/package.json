@@ -15,10 +15,10 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-feather": "^2.0.8",
+    "react-feather": "^2.0.9",
     "reactstrap": "^8.4.1",
     "unist-util-parents": "^1.0.3",
-    "unist-util-select": "^3.0.1"
+    "unist-util-select": "^3.0.3"
   },
   "scripts": {
     "start": "next start",
